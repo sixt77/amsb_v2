@@ -123,8 +123,8 @@ function displayRole(role){
             document.getElementById(role).style.visibility ="visible";
             break;
         case "otm":
-            var matchs = get_matchs_otm(user_role.otm);
-            display_match(matchs,role);
+            document.getElementById(role).appendChild(create_element("button","inscriptionOTM","boutonCoach","inscriptionOtm","Inscription aux matchs"));
+            document.getElementById(role).appendChild(create_element("button","gestionScore","boutonCoach","gestionScore","Gestion des scores"));
             document.getElementById(role).style.visibility ="visible";
             break;
         case "entraineur":
@@ -154,6 +154,46 @@ function displayRole(role){
 
 }
 
+function inscriptionOtm() {
+    remove_class("boutonCoach");
+    var matchs = get_matchs_otm(user_role.otm);
+    display_match(matchs,"otm");
+    document.getElementById('otm').style.visibility ="visible";
+}
+
+function gestionScore() {
+    remove_class("boutonCoach");
+    var matchs = get_matchs_otm(user_role.otm);
+    var loop = 0;
+    for (var i in matchs) {
+        if (matchs[i] != null) {
+            document.getElementById(role).appendChild(create_element("ul", matchs[loop]['match']['id'], "match_div", "", ""));
+            document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("ul", "match_info" + matchs[loop]['match']['id'], "", "", ""));
+            document.getElementById("match_info" + matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "lieu : " + matchs[loop]['match']['lieux']));
+            document.getElementById("match_info" + matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "Date : " + timestampToTime(matchs[loop]['match']['date'])));
+            if (matchs[loop]['team'][0] != undefined) {
+                document.getElementById("match_info" + matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "Equipe 1 : " + matchs[loop]['team'][0]['nom']));
+            }
+            if (matchs[loop]['team'][1] != undefined) {
+                document.getElementById("match_info" + matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "Equipe 2 : " + matchs[loop]['team'][1]['nom']));
+            }
+            if (matchs[loop]['match']['selected']) {
+                document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "scores : "));
+                document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "<form name=\"score\" method=\"get\">\n" +
+                    "            <input type=\"text\" class=\"input_text\" name=\"equipe1\" placeholder=\"score equipe 1 \"/>\n" +
+                    "            <input type=\"text\" class=\"input_text\" name=\"equipe2\" placeholder=\"score equipe 2\"/>\n" +
+                    "            <input type=\"button\" class=\"formButton\" name=\"bouton\" value=\"Valider\" onclick=\"sendScore(score)\"/>\n" +
+                    "        </form>"));
+                document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("BUTTON", "match" + [loop], "sub_button red_button", "subscribe_to_match(" + matchs[loop]['match']['id'] + ", '" + role + "', " + matchs[loop]['match']['selected'] + ", " + user_role.otm + ")", "-"));
+            }
+        }
+    }
+}
+function sendScore(score){
+    premierScore = document.score.equipe1.value;
+    secondScore = document.score.equipe1.value;
+    post_scores(premierScore,secondScore);
+}
 function display_chat() {
     var matchs = get_all_matchs();
 

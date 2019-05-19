@@ -346,3 +346,32 @@ input[type="text"]:hover, input[type="password"]:hover {
     max-width: 500px;
     border-radius: 3px;
 }
+
+.score {
+    border: solid 1px #CC0000;
+    border-radius: 3px;
+    margin: 2px;
+    padding:10px;
+    width: 30%;
+    min-width: 100px;
+}
+
+.boutonScore {
+    margin: 20px 20px 20px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border: 1px solid #888;
+    border-radius: 3px;
+    background-color: #CC0000;
+    padding: 10px;
+    width: 30%;
+    min-width: 250px;
+    font: inherit;
+}
+
+.divScore {
+    display: flex;
+    flex-direction: row;
+}

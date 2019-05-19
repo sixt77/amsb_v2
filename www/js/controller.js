@@ -5,9 +5,7 @@ function connect(log){
     identifiant = document.log.mail.value;
     password = document.log.pass.value;
     user_info = login(identifiant, password);
-    twttr.widgets.load(
-        document.getElementById("accueil")
-    );
+    displayRole('tweet');
     if(user_info.user_id !== undefined){
         user_role = (get_user_info(user_info.user_id));
         document.getElementById('connexion').style.display ='none';
@@ -39,7 +37,7 @@ function addButtonRoles(user_role){
     document.getElementById('button_list').appendChild(btnacc);
     for (var i in user_role) {
         if(user_role[i] != null){
-            if(role_list[loop] != "utilisateur" && role_list[loop] != "entraineur"){
+            if(role_list[loop] != "utilisateur" && role_list[loop] != "entraineur" && role_list[loop] != "otm"){
                 var btn = document.createElement("BUTTON");
                 btn.setAttribute("id", "test1");
                 btn.setAttribute("class", "roleButton");
@@ -53,6 +51,15 @@ function addButtonRoles(user_role){
                 btn.setAttribute("id", "test1");
                 btn.setAttribute("class", "roleButton");
                 btn.setAttribute("onclick", "displayRole('entraineurMenu')");
+                btn.innerHTML = role_list[loop];
+                document.getElementById('button_list').appendChild(btn);
+
+            }
+            if(role_list[loop] == "otm"){
+                var btn = document.createElement("BUTTON");
+                btn.setAttribute("id", "test1");
+                btn.setAttribute("class", "roleButton");
+                btn.setAttribute("onclick", "displayRole('otmMenu')");
                 btn.innerHTML = role_list[loop];
                 document.getElementById('button_list').appendChild(btn);
 
@@ -122,10 +129,15 @@ function displayRole(role){
             display_match(matchs,role);
             document.getElementById(role).style.visibility ="visible";
             break;
+        case "otmMenu":
+            document.getElementById(role).appendChild(create_element("button","inscriptionOTM","boutonCoach","displayRole('otm')","Inscription aux matchs"));
+            document.getElementById(role).appendChild(create_element("button","gestionScore","boutonCoach","gestionScore()","Gestion des scores"));
+            document.getElementById(role).style.visibility ="visible";
+            break;
         case "otm":
             var matchs = get_matchs_otm(user_role.otm);
             display_match(matchs,role);
-            document.getElementById(role).style.visibility ="visible";
+            document.getElementById('otm').style.visibility ="visible";
             break;
         case "entraineur":
             var matchs = get_matchs_coach(user_role.entraineur);
@@ -154,6 +166,54 @@ function displayRole(role){
 
 }
 
+function gestionScore() {
+    remove_class("boutonCoach");
+    var matchs = get_matchs_otm(user_role.otm);
+    var loop = 0;
+    for (var i in matchs) {
+        if (matchs[i] != null && matchs[loop]['match']['selected']) {
+            document.getElementById('otm').appendChild(create_element("ul", matchs[loop]['match']['id'], "match_div", "", ""));
+            document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("ul", "match_info" + matchs[loop]['match']['id'], "", "", ""));
+            document.getElementById("match_info" + matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "lieu : " + matchs[loop]['match']['lieux']));
+            document.getElementById("match_info" + matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "Date : " + timestampToTime(matchs[loop]['match']['date'])));
+            if (matchs[loop]['team'][0] != undefined) {
+                document.getElementById("match_info" + matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "Equipe 1 : " + matchs[loop]['team'][0]['nom']));
+            }
+            if (matchs[loop]['team'][1] != undefined) {
+                document.getElementById("match_info" + matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "Equipe 2 : " + matchs[loop]['team'][1]['nom']));
+            }
+            document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "", "scores : "));
+            document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("li", "divScore"+matchs[loop]['match']['id'], "divScore", "", ""));
+            var score1 = document.createElement("input");
+            score1.setAttribute("id", "score1"+matchs[loop]['match']['id']);
+            score1.setAttribute("class", "score");
+            score1.setAttribute("placeholder", "Equipe 1");
+            document.getElementById("divScore"+matchs[loop]['match']['id']).appendChild(score1);
+
+            var score2 = document.createElement("input");
+            score2.setAttribute("id", "score2"+matchs[loop]['match']['id']);
+            score2.setAttribute("class", "score");
+            score2.setAttribute("placeholder", "Equipe 2");
+            document.getElementById("divScore"+matchs[loop]['match']['id']).appendChild(score2);
+
+            var validScore = document.createElement("BUTTON");
+            validScore.setAttribute("id", "validScore");
+            validScore.setAttribute("class", "boutonScore");
+            validScore.setAttribute("onclick", "sendScore('"+matchs[loop]['match']['id']+"')");
+            validScore.innerHTML = "Valider le score final";
+            document.getElementById(matchs[loop]['match']['id']).appendChild(validScore);
+        }
+        loop++;
+        console.log(matchs[loop]);
+    }
+    document.getElementById('otm').style.display = 'flex';
+}
+function sendScore(id){
+    premierScore = document.getElementById('score1'+id).value;
+    secondScore = document.getElementById('score2'+id).value;
+    //post_score(id,premierScore,secondScore);
+    console.log('Match n° : '+ id + ', scores :' +premierScore + ' - ' + secondScore);
+}
 function display_chat() {
     var matchs = get_all_matchs();
 

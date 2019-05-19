@@ -12,22 +12,6 @@
         * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
             * Enable inline JS: add 'unsafe-inline' to default-src
     -->
-    <script>window.twttr = (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0],
-            t = window.twttr || {};
-        if (d.getElementById(id)) return t;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://platform.twitter.com/widgets.js";
-        fjs.parentNode.insertBefore(js, fjs);
-
-        t._e = [];
-        t.ready = function(f) {
-            t._e.push(f);
-        };
-
-        return t;
-    }(document, "script", "twitter-wjs"));</script>
     <script type="text/javascript" src="js/controller.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
 
@@ -66,7 +50,7 @@
 </section>
 <div id="home" class = "role_div" >
 </div>
-<div id="tweet" class="role_div">
+<div id="tweet" class="hidden role_div">
     <a class="twitter-timeline" href="https://twitter.com/AMSB73?ref_src=twsrc%5Etfw">Tweets by AMSB73</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
 <div id="joueur" class="hidden role_div">
@@ -77,6 +61,9 @@
     <div class="match_list"></div>
 </div>
 <div id="otm" class="hidden role_div">
+    <div class="match_list"></div>
+</div>
+<div id="otmMenu" class="hidden role_div">
     <div class="match_list"></div>
 </div>
 
@@ -109,7 +96,11 @@
 <div id="chat" class="hidden role_div">
     <div class="match_list"></div>
 </div>
-
+<form name="score" class= "hidden role_div" id="formscore" method="get">
+    <input type="text" class="input_text" name="equipe1" placeholder="score equipe 1 "/>
+    <input type="text" class="input_text" name="equipe2" placeholder="score equipe 2"/>
+    <input type="button" class="formButton" name="bouton" value="Valider" onclick="sendScore(score,matchs[loop]['match']['id'])"/>
+</form>
 <!--<script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>-->
 

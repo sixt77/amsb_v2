@@ -266,3 +266,6 @@ function send_message(id_sujet, user_id, date, content){
         return JSON.parse(request.responseText);
     }
 }
+
+function post_score(idmatch,score1,score2) {
+}
