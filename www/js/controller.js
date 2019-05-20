@@ -76,7 +76,7 @@ function addButtonRoles(user_role){
     document.getElementById('button_list').appendChild(btn);
 }
 function changeNav(){
-    if(document.getElementById("mySidenav").style.width === "20%"){
+    if(document.getElementById("mySidenav").style.height > "0%"){
         closeNav();
     }else{
         openNav();
@@ -84,26 +84,35 @@ function changeNav(){
 }
 
 function openNav() {
-    document.getElementById("mySidenav").style.width = "20%";
-    document.getElementById("mySidenav").style.minWidth = "210px";
-    document.getElementById("mySidenav").style.maxWidth = "250px";
+    document.getElementById("mySidenav").style.height = "calc(100% - 50px)";
 }
 
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    document.getElementById("mySidenav").style.minWidth = "0px";
+    document.getElementById("mySidenav").style.height = "0%";
 }
 
 function timestampToTime(UNIX_timestamp){
-    var a = new Date(UNIX_timestamp * 1000);
-    var months = ['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
-    var year = a.getFullYear();
-    var month = months[a.getMonth()];
-    var date = a.getDate();
-    var hour = a.getHours();
-    var min = a.getMinutes();
-    var sec = a.getSeconds();
-    var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+    var a,months,year,month,date,hour,min,time;
+    a = new Date(UNIX_timestamp * 1000);
+    months = ['01','02','03','04','05','06','97','08','09','10','11','12'];
+
+    year = a.getFullYear();
+    month = months[a.getMonth()];
+    date = a.getDate();
+    hour = a.getHours();
+    min = a.getMinutes();
+
+    if ((a.getDate() < 10)) {
+        date = '0' + date;
+    }
+    if ((a.getHours() < 10)) {
+        hour = '0' + hour;
+    }
+    if ((a.getMinutes() < 10)) {
+        min = '0' + min ;
+    }
+    time = date + '/' + month + '/' + year + ' - ' + hour + ':' + min ;
+
     return time;
 }
 
@@ -113,7 +122,6 @@ function displayRole(role){
     hide_class("role_div");
     remove_class("match_div");
     remove_class("boutonCoach");
-    closeNav();
     document.getElementById(role).style.display ="flex";
     switch(role){
         case 'tweet':
@@ -535,19 +543,21 @@ function display_match(matchs,role){
     for (var i in matchs) {
         if(matchs[i] != null){
             document.getElementById(role).appendChild(create_element("ul", matchs[loop]['match']['id'], "match_div", "",""));
-            document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("ul", "match_info"+matchs[loop]['match']['id'], "", "",""));
-            document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","lieu : "+matchs[loop]['match']['lieux']));
-            document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","Date : "+timestampToTime(matchs[loop]['match']['date'])));
+            document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("div", "match_info"+matchs[loop]['match']['id'], "", "",""));
+            document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info match_info_local", "","Local"));
+            document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info match_info_exterieur", "","Extérieur"));
             if(matchs[loop]['team'][0] != undefined){
-                document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","Equipe 1 : "+matchs[loop]['team'][0]['nom']));
+                document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info match_info_teamlocal", "",""+matchs[loop]['team'][0]['nom']));
             }
             if(matchs[loop]['team'][1] != undefined){
-                document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","Equipe 2 : "+matchs[loop]['team'][1]['nom']));
+                document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info match_info_teamext", "",""+matchs[loop]['team'][1]['nom']));
             }
-            closeNav();
+            document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info match_info_lieu_item", "",""+matchs[loop]['match']['lieux']));
+            document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info match_info_date_item", "",""+timestampToTime(matchs[loop]['match']['date'])));
             switch (role) {
                 case 'arbitre':
-                    document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "li"+matchs[loop]['match']['id'], "match_info", "","nombre d'arbitres : "+matchs[loop]['match']['nb_arbitres']));
+                    document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "li"+matchs[loop]['match']['id'], "match_info match_info_arbiter_text", "","nombre d'arbitres"));
+                    document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "li"+matchs[loop]['match']['id'], "match_info match_info_arbiter_nb", "",""+matchs[loop]['match']['nb_arbitres']));
                     if(matchs[loop]['match']['selected']){
                         document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("BUTTON", "match"+[loop], "sub_button red_button", "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', "+matchs[loop]['match']['selected']+", "+user_role.arbitre+")","-"));
                     }else{
@@ -555,11 +565,11 @@ function display_match(matchs,role){
                     }
                     break;
                 case 'otm':
+                    document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info match_info_otm_text", "","nombre d'otm"));
+                    document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info match_info_otm_nb", "",""+matchs[loop]['match']['nb_otm']));
                     if(matchs[loop]['match']['selected']){
-                        document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","nombre d'otm : "+matchs[loop]['match']['nb_otm']));
                         document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("BUTTON", "match"+[loop], "sub_button red_button", "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', "+matchs[loop]['match']['selected']+", "+user_role.otm+")","-"));
                     }else{
-                        document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","nombre d'otm : "+matchs[loop]['match']['nb_otm']));
                         document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("BUTTON", "match"+[loop], "sub_button green_button", "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', "+matchs[loop]['match']['selected']+", "+user_role.otm+")","+"));
                     }
                     break;
