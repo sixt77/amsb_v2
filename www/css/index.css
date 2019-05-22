@@ -260,37 +260,31 @@ input[type="password"]:hover {
 
 .match_div{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-content: center;
     background-color: #fff;
     border: 2px solid #888;
-    border-radius: 5px;
+    border-radius: 3px;
     margin: 15px auto;
-    max-width: 350px;
+    flex-wrap: wrap;
+    max-width: 450px;
 }
 
 .match_div:first-child{
     display: flex;
-    flex-direction: column;
     margin-top: 30px;
 }
 
 .match_div:last-child {
     display: flex;
-    flex-direction: column;
     margin-bottom: 30px;
 }
 
 .match_info{
-    position: initial;
     width: 100%;
-    float: left;
-    margin: 0;
     font-size: 15px;
     text-align: center;
     line-height: 50px;
-    font-weight: 400;
     text-transform: capitalize;
 }
 
@@ -321,7 +315,7 @@ input[type="password"]:hover {
     border-bottom: 2px solid #888;
 }
 
-.match_info_teamext {
+.match_info_teamtext {
     width: 50%;
     float: right;
     border-left: 1px solid #888;
