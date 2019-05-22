@@ -3,54 +3,28 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <!--
-    Customize this policy to fit your own app's needs. For more guidance, see:
-        https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-    Some notes:
-        * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-        * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-        * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-            * Enable inline JS: add 'unsafe-inline' to default-src
-    -->
-    <script>window.twttr = (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0],
-            t = window.twttr || {};
-        if (d.getElementById(id)) return t;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "https://platform.twitter.com/widgets.js";
-        fjs.parentNode.insertBefore(js, fjs);
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
 
-        t._e = [];
-        t.ready = function(f) {
-            t._e.push(f);
-        };
-
-        return t;
-    }(document, "script", "twitter-wjs"));</script>
     <script type="text/javascript" src="js/controller.js"></script>
     <script type="text/javascript" src="js/api.js"></script>
-
     <script type="text/javascript" src="cordova.js"></script>
+
     <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
             crossorigin="anonymous">
     </script>
-    <span id = "menu" class = "hidden menu" style="font-size:20px;cursor:pointer" onclick="changeNav()">&#9776;</span>
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
+
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
-    <title>AMSB</title>
+
+    <title>AMSB Version Mobile</title>
 </head>
 <body>
-
-<div id="mySidenav" class="sidenav">
-    <div id="button_list"></div>
-    <input type="button" class="roleButton centered" value="Déconnexion" onclick="logOff()"/>
-</div>
 
 <section id="connexion" class="log">
     <div class="homescreen">
@@ -58,57 +32,57 @@
     </div>
     <div class="homescreen">
         <form name="log" method="get">
+            <span>E-mail</span>
             <input type="text" class="input_text" name="mail" placeholder="mail"/>
+            <span>Password</span>
             <input type="password" class="input_text" name="pass" placeholder="password"/>
             <input type="button" class="formButton" name="bouton" value="Valider" onclick="connect(log)"/>
         </form>
     </div>
 </section>
-<div id="home" class = "role_div" >
+
+<div id = "menu" class = "hidden menu"><span onclick="changeNav()">&#9776;</span></div>
+
+<div id="mySidenav" class="sidenav">
+    <div id="button_list"></div>
+    <input type="button" class="roleButton centered" value="Déconnexion" onclick="logOff()"/>
 </div>
-<div id="tweet" class="role_div">
+
+<div id="home" class = "role_div" ></div>
+
+<div id="tweet" class="hidden role_div">
     <a class="twitter-timeline" href="https://twitter.com/AMSB73?ref_src=twsrc%5Etfw">Tweets by AMSB73</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
-<div id="joueur" class="hidden role_div">
-    <div class="match_list"></div>
 
-</div>
-<div id="dirigeant" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
-<div id="otm" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
+<div id="joueur" class="hidden role_div"></div>
 
-<div id="coach" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
-<div id="parent" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
-<div id="benevole" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
+<div id="dirigeant" class="hidden role_div"></div>
 
-<div id="utilisateur" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
+<div id="otm" class="hidden role_div"></div>
 
-<div id="arbitre" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
+<div id="otmMenu" class="hidden role_div"></div>
 
-<div id="entraineur" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
+<div id="coach" class="hidden role_div"></div>
 
-<div id="entraineurMenu" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
+<div id="parent" class="hidden role_div"></div>
 
-<div id="chat" class="hidden role_div">
-    <div class="match_list"></div>
-</div>
+<div id="benevole" class="hidden role_div"></div>
+
+<div id="utilisateur" class="hidden role_div"></div>
+
+<div id="arbitre" class="hidden role_div"></div>
+
+<div id="entraineur" class="hidden role_div"></div>
+
+<div id="entraineurMenu" class="hidden role_div"></div>
+
+<div id="chat" class="hidden role_div"></div>
+
+<form name="score" class= "hidden role_div" id="formscore" method="get">
+    <input type="text" class="input_text" name="equipe1" placeholder="score equipe 1 "/>
+    <input type="text" class="input_text" name="equipe2" placeholder="score equipe 2"/>
+    <input type="button" class="formButton" name="bouton" value="Valider" onclick="sendScore(score,matchs[loop]['match']['id'])"/>
+</form>
 
 <!--<script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>-->

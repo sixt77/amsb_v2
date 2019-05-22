@@ -1,23 +1,27 @@
 * {
     -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-html{
-    height: 100%;
-    background-image: url("../img/background.png");
-    margin: 0px;
-    font-family: Calibri, fantasy, serif;
-    font-weight: bold;
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+:focus {
+    outline: none;
 }
 
 body {
+    font-family: 'Roboto', 'PT Sans', sans-serif;
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    font-size:18px;
-    text-transform:uppercase;
-    height:100%;
-    margin: 0px;
+    background-color: #f0f0f094;
+    font-size: 14px;
+    height: 100vh;
 }
 
 input:-webkit-autofill,
@@ -32,64 +36,69 @@ select:-webkit-autofill:focus {
     -webkit-box-shadow: 0 0 0px 1000px whitesmoke inset;
 }
 
-input[type="text"], input[type="password"] {
-    background-color: white;
-    padding: 8px;
-    transition: 0.3s;
-    border: 2px #CC0000 solid;
-    border-radius: 50px;
-    text-align: center;
-    margin-bottom: 5px;
+
+input[type="text"],
+input[type="password"] {
+    font-size: 24px;
+    width: 100%;
+    height: 40px;
+    padding: 3px 6px;
+    border: 1px solid #ddd;
+    color: #32373c;
+    border-radius: 5px;
+    margin: 10px 0;
 }
 
-input[type="text"]:hover, input[type="password"]:hover {
+input[type="text"]:hover,
+input[type="password"]:hover {
     border-color: black;
 }
+
+
 @media only screen and (orientation: portrait){
-    .log{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    .log {
+        display: block;
         width:100%;
         height: 100%;
         align-items:center;
     }
+
     form {
-        height: 100%;
-        width: 60%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .homescreen:nth-child(1){
-        height: 50%;
-        width: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        max-width: 430px;
+        /* height: 100%; */
+        /* width: 81%; */
+        /* display: flex; */
+        /* flex-direction: column; */
+        /* justify-content: center; */
     }
 
-    .homescreen:nth-child(2){
-        height: 50%;
-        width: 80%;
+    .homescreen:nth-child(1) {
         display: flex;
         justify-content: center;
         align-items: center;
+        height: calc(100% - 250px);
+        margin: auto;
     }
+
+    .homescreen:nth-child(2) {
+        width: 100%;
+        height: 250px;
+        padding: 30px 25px;
+        background: #fff;
+        box-shadow: 0 1px 3px rgba(0,0,0,.13);
+    }
+
     img {
-        width: 50%;
-        max-width: 400px;
+        width: 200px;
     }
 }
+
 @media only screen and (max-width: 320px){
     img {
-        max-width: 240px;
-        padding-top: 5px;
     }
 }
+
 @media only screen and (orientation: landscape ){
-    .log{
+    .log {
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -97,6 +106,7 @@ input[type="text"]:hover, input[type="password"]:hover {
         height: 100%;
         align-items:center;
     }
+
     form {
         height: 100%;
         display: flex;
@@ -106,7 +116,8 @@ input[type="text"]:hover, input[type="password"]:hover {
         max-width: 500px;
         min-width: 100px;
     }
-    .homescreen:nth-child(1){
+
+    .homescreen:nth-child(1) {
         width: 50%;
         height: 80%;
         display: flex;
@@ -114,55 +125,58 @@ input[type="text"]:hover, input[type="password"]:hover {
         align-items: center;
     }
 
-    .homescreen:nth-child(2){
+    .homescreen:nth-child(2) {
         width: 50%;
         height: 80%;
         display: flex;
         justify-content: center;
         align-items: center;
     }
+
     img {
         width: 80%;
         max-width: 500px;
     }
 }
+
 @media screen and (aspect-ratio: 1/1){
-    .homescreen:nth-child(1){
+    .homescreen:nth-child(1) {
         max-width: 230px;
         padding-top: 10px;
     }
 }
+
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
+    /*
+    .sidenav {
+        padding-top: 15px;
+    }
+    .sidenav a {
+        font-size: 18px;
+    }
+    */
 }
+
 
 .role_div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 25px;
+    overflow: scroll;
+    height: calc(100vh - 50px);
 }
 
 .sidenav {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
+    height: 0%;
+    width: 100%;
     background-color: #CC0000;
-    overflow-x: hidden;
-    transition: 0.5s;
-    margin-top: 30px;
-
+    overflow: scroll;
+    transition: height ease-in-out 1s;
 }
 
 .valideEquipeButton {
     margin : 20px;
     border: 1px solid #888;
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: #CC0000;
     padding: 10px;
     font: inherit;
@@ -171,20 +185,18 @@ input[type="text"]:hover, input[type="password"]:hover {
 .playerSelected{
     border: 3px solid rgb(0,0,0);
 }
+
 .boutonCoach {
-    margin : 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
+    margin: 20px auto;
     border: 1px solid #888;
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: #CC0000;
     padding: 10px;
-    width: 30%;
-    min-width: 200px;
-    font: inherit;
+    width: 100%;
+    max-width: 250px;
+    font-size: 18px;
 }
+
 .sidenav a {
     padding: 8px 8px 8px 32px;
     font-size: 25px;
@@ -192,23 +204,29 @@ input[type="text"]:hover, input[type="password"]:hover {
     display: block;
     transition: 0.3s;
 }
+
 .roleButton:hover {
-    color: whitesmoke;
+    color: #CC0000;
+    background: #fff;
 }
+
 .roleButton {
     text-transform: uppercase;
     background-color: #CC0000;
     color: black;
-    padding: 8px 8px 8px 8px;
-    font-size: 25px;
+    padding: 10px;
+    margin: 0;
+    font-size: 30px;
     display: block;
     transition: 0.3s;
     width:100%;
     border: none;
 }
+
 .sidenav .closebtn:hover{
     color: whitesmoke;
 }
+
 .sidenav .closebtn {
     color: black;
     position: absolute;
@@ -223,16 +241,20 @@ input[type="text"]:hover, input[type="password"]:hover {
 }
 
 .menu {
-    display: none;
-    left: 0px;
-    top: 0px;
     width: 100%;
     background-color: #CC0000;
     text-align: center;
     justify-content: center;
     align-content: center;
-    height: 30px;
-    padding-top: 5px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 36px;
+    z-index: 10;
+}
+
+.menu span {
+    width: 100%;
+    z-index: 10;
 }
 
 .match_div{
@@ -240,58 +262,141 @@ input[type="text"]:hover, input[type="password"]:hover {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    margin: 3px 3px 3px 3px;
     background-color: #fff;
-    border: 1px solid #888;
-    border-radius: 3px;
-    padding: 10px;
-    height: auto;
-    width:90%;
+    border: 2px solid #888;
+    border-radius: 5px;
+    margin: 15px auto;
+    max-width: 350px;
 }
 
-.match_div:nth-child(1){
+.match_div:first-child{
     display: flex;
     flex-direction: column;
+    margin-top: 30px;
 }
+
+.match_div:last-child {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
 .match_info{
     position: initial;
     width: 100%;
     float: left;
-    margin: 0px;
-    height: 30px;
+    margin: 0;
+    font-size: 15px;
+    text-align: center;
+    line-height: 50px;
+    font-weight: 400;
+    text-transform: capitalize;
+}
+
+.match_info_local {
+    width: 50%;
+    float: left;
+    border-right: 1px solid #888;
+    border-bottom: 2px solid #888;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+
+.match_info_exterieur {
+    width: 50%;
+    float: right;
+    border-left: 1px solid #888;
+    border-bottom: 2px solid #888;
+    font-weight: 700;
+    text-transform: unset;
+    font-size: 18px;
+}
+
+.match_info_teamlocal {
+    width: 50%;
+    float: left;
+    border-right: 1px solid #888;
+    border-bottom: 2px solid #888;
+}
+
+.match_info_teamext {
+    width: 50%;
+    float: right;
+    border-left: 1px solid #888;
+    border-bottom: 2px solid #888;
+}
+
+.match_info_lieu_item {
+    width: 50%;
+    float: left;
+}
+
+.match_info_date_item {
+    width: 50%;
+    float: right;
+}
+
+.match_info_otm_text {
+    width: calc(100% - 50px);
+    float: left;
+    border-top: 2px solid #888;
+    border-right: 2px solid #888;
+}
+
+.match_info_otm_nb {
+    width: 50px;
+    float: right;
+    border-top: 2px solid #888;
+}
+
+.match_info_arbiter_text {
+    width: calc(100% - 50px);
+    float: left;
+    border-top: 2px solid #888;
+    border-right: 2px solid #888;
+}
+
+.match_info_arbiter_nb {
+    width: 50px;
+    float: right;
+    border-top: 2px solid #888;
 }
 
 .player_info{
     position: initial;
-    width: 100%;
-    float: left;
-    margin: 0px;
+    margin: 0;
+    line-height: 25px;
+    font-size: 16px;
 }
+
 .player_info_supp{
     position: initial;
     width: 100%;
     float: left;
-    margin: 0px;
+    margin: 0;
+    line-height: 25px;
 }
+
 .player_div{
     display: flex;
     flex-direction: column;
     border: 1px solid #888;
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: #CC0000;
     padding: 10px;
-    margin: 3px;
+    margin: 5px 0;
 }
 
 .sub_button {
-    border: 2px solid black;
-    border-radius: 15px;
-    width: 20%;
+    border: none;
+    border-radius: 0 0 3px 3px;
+    width: 100%;
+    height: 50px;
     margin: auto;
     font-size: 20px;
-    min-width: 100px;
-    max-width: 250px;
 }
+
 .red_button {
     background-color: #CC0000;
 }
@@ -299,13 +404,14 @@ input[type="text"]:hover, input[type="password"]:hover {
 .green_button {
     background-color: #00aa00;
 }
+
 .parent_info_list{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     width: 100%;
     border: 1px solid #888;
-    border-radius: 3px;
+    border-radius: 5px;
     margin-top: 5px;
     background-color: whitesmoke;
 }
@@ -313,6 +419,7 @@ input[type="text"]:hover, input[type="password"]:hover {
 .parent_info {
     margin-left: 10px;
 }
+
 .parent_info:nth-child(1){
     margin-top: 10px;
 }
@@ -320,29 +427,72 @@ input[type="text"]:hover, input[type="password"]:hover {
 .parent_info:nth-child(4){
     margin-bottom: 10px;
 }
-.formButton:hover {
-    color: black;
-    border-color: black;
+
+.formButton:active {
+    background-color: #d25959;
+    border-color: #D5211D;
+    box-shadow: inset 0 2px 0 #D5211D;
+
+    -webkit-transform: translateY(1px);
+    -ms-transform: translateY(1px);
+    transform: translateY(1px);
 }
+
 .formButton {
-    background-color: #CC0000;
-    color: whitesmoke;
-    padding: 8px 8px 8px 8px;
-    transition: 0.3s;
-    width:100%;
-    border: 2px #CC0000 solid;
-    border-radius: 50px;
-    text-align: center;
+    margin: 10px auto 0;
+    border: 1px solid #D5211D;
+    border-radius: 5px;
+    font-family: "Roboto";
+    font-size: 24px;
+    width: 150px;
+    display: block;
+    padding: 7px 15px;
+    color: #FFF;
+    cursor: pointer;
+    background-color: #f73f3f;
+    text-shadow: 0 -1px 1px #D52114, 1px 0 1px #D52114, 0 1px 1px #D52114, -1px 0 1px #D52114;
+    box-shadow: 0 1px 0 #D52114;
 }
+
 .liImageLicence {
     display: flex;
     flex-direction: column;
     align-content: center;
     justify-content: center;
 }
+
 .imageLicence {
     text-align: center;
     width:80%;
     max-width: 500px;
+    border-radius: 5px;
+}
+
+.score {
+    border: solid 1px #CC0000;
     border-radius: 3px;
+    margin: 2px;
+    padding:10px;
+    width: 30%;
+    min-width: 100px;
+}
+
+.boutonScore {
+    margin: 20px 20px 20px 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    border: 1px solid #888;
+    border-radius: 3px;
+    background-color: #CC0000;
+    padding: 10px;
+    width: 30%;
+    min-width: 250px;
+    font: inherit;
+}
+
+.divScore {
+    display: flex;
+    flex-direction: row;
 }
