@@ -64,7 +64,7 @@ function addButtonRoles(user_role){
     var btn = document.createElement("BUTTON");
     btn.setAttribute("id", "test1");
     btn.setAttribute("class", "roleButton");
-    btn.setAttribute("onclick", "display_chat()");
+    btn.setAttribute("onclick", "displayRole('chat')");
     btn.innerHTML = "chat";
     document.getElementById('button_list').appendChild(btn);
 }
@@ -101,8 +101,7 @@ function timestampToTime(UNIX_timestamp){
 }
 
 function displayRole(role){
-    console.log(role);
-    closeNav();
+    console.log(role);    closeNav();
     hide_class("role_div");
     remove_class("match_div");
     remove_class("boutonCoach");
@@ -145,6 +144,12 @@ function displayRole(role){
             }
             document.getElementById(role).style.visibility ="visible";
             break;
+        case "chat" :
+            var matchs = get_all_matchs();
+            display_match(matchs,role);
+            document.getElementById(role).style.visibility ="visible";
+            break;
+
         default:
             var matchs = get_all_matchs();
             display_match(matchs,role);
@@ -154,11 +159,38 @@ function displayRole(role){
 
 }
 
-function display_chat() {
-    var matchs = get_all_matchs();
+function display_subject(id_match) {
+    subjects =  get_subject_list(id_match);
+    if(count_class("match_info"+id_match, "sujets_div")===0){
+        remove_class("sujets_div");
+        remove_class("chat_box");
+        for (var i in subjects){
+            document.getElementById("match_info"+id_match).appendChild(create_element('div', "sujet_"+subjects[i]['id_sujets'], "sujets_div", "display_message('"+subjects[i]['id_sujets']+"')", subjects[i]['role']))
+        }
+    }
+}
 
-    display_match(matchs,'chat');
-    document.getElementById('chat').style.visibility ="visible";
+function display_message(id_subject) {
+    message_list = get_message(id_subject, 10);
+
+    //console.log(message_list);
+    if(count_class("sujet_"+id_subject, "message_list")===0){
+        document.getElementById("sujet_"+id_subject).appendChild(create_element("DIV","message_list_"+id_subject,"message_list", "", ""));
+        for(var i in message_list){
+            //document.getElementById("message_list_"+id_subject).appendChild(create_element())
+        }
+        document.getElementById("sujet_"+id_subject).appendChild(create_input("text", "chat_box_"+id_subject, "chat_box", "", ""));
+        console.log("num : "+id_subject);
+        document.getElementById("sujet_"+id_subject).appendChild(create_button("", "", "envoyer", "send_message("+id_subject+", "+user_info['user_id']+", "+document.getElementById("chat_box_"+id_subject).value+")"));
+    }
+}
+
+function send_message(id_sujet, id_user, valeur) {
+    console.log("id_sujet : "+id_sujet);
+    console.log("id_user : "+id_user);
+    console.log("valeur : "+valeur);
+    console.log(document.getElementById("chat_box_88").value);
+
 }
 
 function displayNotifications(idcoach){
@@ -281,8 +313,40 @@ function create_element($tag, $id, $class, $onclick, $html){
     return item;
 }
 
+function create_input($type, $id, $class, $name, $required){
+    var item = document.createElement("input");
+    item.type = $type;
+    if($id != "" && $id != undefined)item.setAttribute("id", $id);
+    if($class != "" && $class != undefined)item.setAttribute("class", $class);
+    if($name != "" && $name != undefined)item.setAttribute("name", $name);
+    if($required != "" && $required != undefined)item.setAttribute("required", 'required');
+    return item;
+}
+
+function create_button($id, $class, $value, $onclick){
+    var item = document.createElement("input");
+    item.type = "button";
+    if($id != "" && $id != undefined)item.setAttribute("id", $id);
+    if($class != "" && $class != undefined)item.setAttribute("class", $class);
+    if($onclick != "" && $onclick != undefined)item.setAttribute( "onclick", $onclick);
+    if($value != "" && $value != undefined)item.value = $value;
+    return item;
+}
+
+
 function remove_class($class) {
     $( "."+$class+"" ).remove();
+}
+
+function count_class(id, class1) {
+    childNodes = document.getElementById(id).childNodes;
+    var nb = 0;
+    for (var i = 0; i < childNodes.length; i++) {
+        if(childNodes[i].className == class1){
+            nb++;
+        }
+    }
+    return nb;
 }
 
 function remove_id($id) {
@@ -356,7 +420,7 @@ function choice_player_list_on_match($id_match, îd_coach) {
         var selected_player_list=get_player_by_player_list(îd_coach, $id_match);
         document.getElementById($id_match).appendChild(create_element("ul","player_list"+$id_match, "player_list", "",""));
         var loop = 0;
-        console.log(selected_player_list);
+
         for (var i in player_list) {
             if(player_list[i] != null){
                 console.log(selected_player_list);
@@ -511,6 +575,9 @@ function display_match(matchs,role){
                     /*document.getElementById("match_info"+matchs[loop]['match']['id']).setAttribute("onclick", "display_player_list_on_match("+matchs[loop]['match']['id']+","+user_role.entraineur+")");
                     document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("ul", "display_"+matchs[loop]['match']['id'], "display_match_div", "",""));
                     */break;
+                case "chat" :
+                    document.getElementById("match_info"+matchs[loop]['match']['id']).setAttribute("onclick", "display_subject("+matchs[loop]['match']['id']+")");
+                    break;
                 default:
             }
             loop++;
