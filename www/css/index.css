@@ -271,12 +271,10 @@ input[type="password"]:hover {
 }
 
 .match_div:first-child{
-    display: flex;
     margin-top: 30px;
 }
 
 .match_div:last-child {
-    display: flex;
     margin-bottom: 30px;
 }
 
@@ -490,4 +488,7 @@ input[type="password"]:hover {
 .divScore {
     display: flex;
     flex-direction: row;
+}
+.hide_by_date{
+    display: none; !important;
 }

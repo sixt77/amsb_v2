@@ -7,7 +7,6 @@ function connect(log){
     identifiant = document.log.mail.value;
     password = document.log.pass.value;
     user_info = login(identifiant, password);
-
     if(user_info.user_id !== undefined){
         user_role = (get_user_info(user_info.user_id));
         document.getElementById('connexion').style.display ='none';
@@ -130,13 +129,14 @@ function displayRole(role){
     hide_class("role_div");
     remove_class("match_div");
     remove_class("boutonCoach");
-    let matchs;
+    var matchs;
     let ElmtRole = document.getElementById(role);
 
     ElmtRole.style.display ="flex";
 
     switch(role){
         case 'tweet':
+            add_class_by_id("tri_temporel", "hidden");
             ElmtRole.style.display ="block";
             break;
 
@@ -549,6 +549,17 @@ function remove_class($class) {
     $( "."+$class+"" ).remove();
 }
 
+function remove_class_by_id(id, class1) {
+    $( "#"+id+"" ).removeClass(class1);
+}
+function add_class_by_id(id, class1) {
+    $( "#"+id+"" ).addClass(class1);
+}
+
+function  add_class_by_class(class1, class2) {
+    $( "."+class1+"" ).addClass(class2);
+}
+
 function count_class(id, class1) {
     childNodes = document.getElementById(id).childNodes;
     var nb = 0;
@@ -597,6 +608,30 @@ function subscribe_to_match($match_id, $role, $selected, $id_role) {
         default:
     }
     displayRole($role);
+}
+
+function sort_match_by_date(date1, date2, classe){
+    var array = get_all_matchs();
+    var j = 0;
+    var array2 = new Array();
+    if(date1 == null && date2 == null){
+        for(var i in array){
+            remove_class_by_id(array[i]['match']['id'], "hide_by_date");
+        }
+    }else{
+        for(var i in array){
+            if(date1<array[i]['match']['date'] && date2>array[i]['match']['date']){
+                array2[j] = array[i];
+                j++;
+            }
+        }
+        console.log(array2);
+        add_class_by_class(classe, "hide_by_date");
+        for(var i in array2){
+            remove_class_by_id(array2[i]['match']['id'], "hide_by_date");
+
+        }
+    }
 }
 
 function select_player(id){
@@ -743,6 +778,7 @@ function show_player_info($player_id){
 }
 
 function display_match(matchs,role){
+    remove_class_by_id("tri_temporel", "hidden");
     var loop = 0;
     for (var i in matchs) {
         if(matchs[i] != null){

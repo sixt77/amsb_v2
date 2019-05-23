@@ -225,11 +225,22 @@ function valid_list_match(player, match_id, coach_id){
 
 ////////////////////////////////CHAT///////////////////////
 
-//recupère la liste des sujet pour un match
+//recupère la liste des sujet pour un match et un role
 function get_subject_id(id_match, role){
     var request = new XMLHttpRequest();
     //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_subject_id&match_id=' + id_match+'&role='+role);
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_subject_id&match_id=' + id_match+'&role='+role, false);
+    request.send(null);
+    if (request.status ===200) {
+        return JSON.parse(request.responseText);
+    }
+}
+
+//recupère la liste des sujet pour un match
+function get_subject_list(id_match){
+    var request = new XMLHttpRequest();
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_subject_id&match_id=' + id_match+'&role='+role);
+    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_subject_list&match_id=' + id_match, false);
     request.send(null);
     if (request.status ===200) {
         return JSON.parse(request.responseText);
@@ -248,9 +259,10 @@ function get_message(id_sujet, limit){
 }
 
 //permet d'envoyer un message
-function send_message(id_sujet, user_id, date, content){
+function post_message(id_sujet, user_id, date, content){
     var request = new XMLHttpRequest();
-    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=send_message&id_sujet=' + id_sujet+'&user_id=' + user_id+'&date=' + date+'&content=' + content, false);
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=send_message&subject_id=' + id_sujet+'&user_id=' + user_id+'&date=' + date+'&content=' + content);
+    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=send_message&subject_id=' + id_sujet+'&user_id=' + user_id+'&date=' + date+'&content=' + content, false);
     request.send(null);
     if (request.status ===200) {
         return JSON.parse(request.responseText);
@@ -258,4 +270,10 @@ function send_message(id_sujet, user_id, date, content){
 }
 
 function post_score(idmatch,score1,score2) {
+    var request = new XMLHttpRequest();
+      request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=post_score&match_id=' + idmatch+'&score1=' + score1+'&score2=' + score2, false);
+    request.send(null);
+    if (request.status ===200) {
+        return JSON.parse(request.responseText);
+    }
 }
