@@ -261,7 +261,8 @@ function get_message(id_sujet, limit){
 //permet d'envoyer un message
 function post_message(id_sujet, user_id, date, content){
     var request = new XMLHttpRequest();
-    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=send_message&id_sujet=' + id_sujet+'&user_id=' + user_id+'&date=' + date+'&content=' + content, false);
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=send_message&subject_id=' + id_sujet+'&user_id=' + user_id+'&date=' + date+'&content=' + content);
+    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=send_message&subject_id=' + id_sujet+'&user_id=' + user_id+'&date=' + date+'&content=' + content, false);
     request.send(null);
     if (request.status ===200) {
         return JSON.parse(request.responseText);

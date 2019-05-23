@@ -120,7 +120,7 @@ function addButtonRoles(user_role){
     btn = document.createElement("BUTTON");
     btn.setAttribute("id", "");
     btn.setAttribute("class", "roleButton");
-    btn.setAttribute("onclick", "changeNav();display_chat()");
+    btn.setAttribute("onclick", "changeNav();displayRole('chat')");
     btn.innerHTML = "chat";
     document.getElementById('button_list').appendChild(btn);
 }
@@ -173,6 +173,12 @@ function displayRole(role){
         case "entraineur":
             matchs = get_matchs_coach(user_role.entraineur);
             display_match(matchs,role);
+            break;
+
+        case "chat" :
+            matchs = get_all_matchs();
+            display_match(matchs,role);
+            document.getElementById(role).style.visibility ="visible";
             break;
 
         case "entraineurMenu":
@@ -378,6 +384,44 @@ function displayNotifications(idcoach){
     document.getElementById('entraineur').style.display="flex";
 
 }
+function display_subject(id_match) {
+    subjects =  get_subject_list(id_match);
+    if(count_class("match_info"+id_match, "sujets_div")===0){
+        remove_class("sujets_div");
+        remove_class("chat_box");
+        for (var i in subjects){
+            document.getElementById("match_info"+id_match).appendChild(create_element('div', "sujet_"+subjects[i]['id_sujets'], "sujets_div", "display_message('"+subjects[i]['id_sujets']+"')", subjects[i]['role']))
+        }
+    }
+}
+
+function display_message(id_subject) {
+    message_list = get_message(id_subject, 10);
+    console.log(message_list);
+    //console.log(message_list);
+    if(count_class("sujet_"+id_subject, "message_list")===0){
+        document.getElementById("sujet_"+id_subject).appendChild(create_element("DIV","message_list_"+id_subject,"message_list", "", ""));
+
+        document.getElementById("sujet_"+id_subject).appendChild(create_input("text", "chat_box_"+id_subject, "chat_box", "", ""));
+        console.log("num : "+id_subject);
+        document.getElementById("sujet_"+id_subject).appendChild(create_button("", "", "envoyer", "send_message("+id_subject+", "+user_info['user_id']+")"));
+    }
+    remove_class("message_body");
+    for(var i in message_list){
+        document.getElementById("message_list_"+id_subject).appendChild(create_element("DIV", "", "message_body", "", "de : "+message_list[i]['nom']+" "+message_list[i]['prenom']+" : "+message_list[i]['contenu']));
+    }
+}
+
+function send_message(id_sujet, id_user) {
+    var text = document.getElementById("chat_box_"+id_sujet).value;
+    if(post_message(id_sujet, id_user, new Date().getTime(), text)){
+        display_message(id_sujet);
+        document.getElementById("chat_box_"+id_sujet).value = "";
+    }else{
+        alert('erreur');
+    }
+
+}
 
 function swap_coach(idrequete,idcoach1,idcoach2,idmatch){
     valide_changement_coach(idrequete,idcoach1,idcoach2,idmatch);
@@ -478,8 +522,39 @@ function create_element($tag, $id, $class, $onclick, $html){
     return item;
 }
 
+function create_input($type, $id, $class, $name, $required){
+    var item = document.createElement("input");
+    item.type = $type;
+    if($id != "" && $id != undefined)item.setAttribute("id", $id);
+    if($class != "" && $class != undefined)item.setAttribute("class", $class);
+    if($name != "" && $name != undefined)item.setAttribute("name", $name);
+    if($required != "" && $required != undefined)item.setAttribute("required", 'required');
+    return item;
+}
+
+function create_button($id, $class, $value, $onclick){
+    var item = document.createElement("input");
+    item.type = "button";
+    if($id != "" && $id != undefined)item.setAttribute("id", $id);
+    if($class != "" && $class != undefined)item.setAttribute("class", $class);
+    if($onclick != "" && $onclick != undefined)item.setAttribute( "onclick", $onclick);
+    if($value != "" && $value != undefined)item.value = $value;
+    return item;
+}
+
 function remove_class($class) {
     $( "."+$class+"" ).remove();
+}
+
+function count_class(id, class1) {
+    childNodes = document.getElementById(id).childNodes;
+    var nb = 0;
+    for (var i = 0; i < childNodes.length; i++) {
+        if(childNodes[i].className == class1){
+            nb++;
+        }
+    }
+    return nb;
 }
 
 function remove_id($id) {
@@ -832,6 +907,10 @@ function display_match(matchs,role){
                             "display_match_div",
                             "",
                             ""));
+                    break;
+
+                case "chat" :
+                    document.getElementById("match_info"+matchs[loop]['match']['id']).setAttribute("onclick", "display_subject("+matchs[loop]['match']['id']+")");
                     break;
 
                 case 'entraineurChoixEquipe':
