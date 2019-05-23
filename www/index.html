@@ -19,6 +19,7 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" type="text/css" href="css/index.css">
 
@@ -97,15 +98,15 @@
     </div>
 </section>
 
-<div id = "menu" class = "hidden menu"><span onclick="changeNav()">&#9776;</span></div>
-
 <div id="mySidenav" class="sidenav">
     <div id="button_list"></div>
-    <input type="button" class="roleButton centered" value="Déconnexion" onclick="logOff()"/>
 </div>
 
 
 <div id="tweet" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Accueil</h1>
+    </div>
     <a class="twitter-timeline" href="https://twitter.com/AMSB73?ref_src=twsrc%5Etfw">Tweets by AMSB73</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
 
@@ -119,39 +120,84 @@
     <input type="button" value="tout" onclick="sort_match_by_date(null, null, 'match_div')">
 </div>
 
-<div id="joueur" class="hidden role_div"></div>
+<div id="joueur" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Matchs Joueur</h1>
+    </div>
+</div>
 
-<div id="dirigeant" class="hidden role_div"></div>
+<div id="dirigeant" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Tous les Matchs</h1>
+    </div>
+</div>
 
 
-<div id="otm" class="hidden role_div"></div>
+<div id="otm" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Séléctionnez un Match</h1>
+    </div>
+</div>
 
-<div id="otmMenu" class="hidden role_div"></div>
+<div id="otmMenu" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">OTM</h1>
+    </div>
+</div>
 
-<div id="coach" class="hidden role_div"></div>
+<div id="coach" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Coach</h1>
+    </div>
+</div>
 
-<div id="parent" class="hidden role_div"></div>
+<div id="parent" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1"></h1>
+    </div>
+</div>
 
-<div id="benevole" class="hidden role_div"></div>
+<div id="benevole" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1"></h1>
+    </div>
+</div>
 
-<div id="utilisateur" class="hidden role_div"></div>
+<div id="utilisateur" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1"></h1>
+    </div>
+</div>
 
-<div id="arbitre" class="hidden role_div"></div>
+<div id="arbitre" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Arbitre</h1>
+    </div>
+</div>
 
-<div id="entraineur" class="hidden role_div"></div>
+<div id="entraineur" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Entraineur</h1>
+    </div>
+</div>
 
-<div id="entraineurMenu" class="hidden role_div"></div>
+<div id="entraineurMenu" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Menu</h1>
+    </div>
+</div>
 
-<div id="chat" class="hidden role_div"></div>
+<div id="chat" class="hidden role_div">
+    <div class="title-role">
+        <h1 class="title-role-h1">Chat</h1>
+    </div>
+</div>
 
-<form name="score" class= "hidden role_div" id="formscore" method="get">
-    <input type="text" class="input_text" name="equipe1" placeholder="score equipe 1 "/>
-    <input type="text" class="input_text" name="equipe2" placeholder="score equipe 2"/>
-    <input type="button" class="formButton" name="bouton" value="Valider" onclick="sendScore(score,matchs[loop]['match']['id'])"/>
-</form>
+<div id = "menu" class = "hidden menu">
+    <i onclick="logOff()" class="fas fa-power-off roleButtonNavBar"></i>
+    <span class="roleButtonNavBar" onclick="changeNav()">&#9776;</span>
+</div>
 
-<!--<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="js/index.js"></script>-->
 
 </body>
 </html>
