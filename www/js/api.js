@@ -270,4 +270,10 @@ function post_message(id_sujet, user_id, date, content){
 }
 
 function post_score(idmatch,score1,score2) {
+    var request = new XMLHttpRequest();
+      request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=post_score&match_id=' + idmatch+'&score1=' + score1+'&score2=' + score2, false);
+    request.send(null);
+    if (request.status ===200) {
+        return JSON.parse(request.responseText);
+    }
 }

@@ -352,13 +352,16 @@ function gestionScore() {
 function sendScore(id){
     let premierScore = document.getElementById('score1'+id).value;
     let secondScore  = document.getElementById('score2'+id).value;
-    //post_score(id,premierScore,secondScore);
-    console.log('Match n° : '+ id + ', scores :' +premierScore + ' - ' + secondScore);
+    if(post_score(id,premierScore,secondScore)){
+        alert('score envoyé');
+    }else{
+        alert('erreur');
+    }
+
 }
 
 function display_chat() {
     var matchs = get_all_matchs();
-
     display_match(matchs,'chat');
     document.getElementById('chat').style.display ="block";
 }
