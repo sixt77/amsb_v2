@@ -853,7 +853,41 @@ function display_match(matchs,role){
                     "",
                     ""+timestampToTime(matchs[loop]['match']['date'])));
 
+            a = new Date(matchs[loop]['match']['date'] * 1000);
+            if(a<Date.now()) {
+                console.log(matchs[loop]['match']['date']+3600000 + "\<Avant // Après\>" + Date.now())
+                document.getElementById("divScore" + matchs[loop]['match']['id'])
+                    .appendChild(create_element(
+                        "div",
+                        "score1"+matchs[loop]['match']['id'],
+                        "score score1",
+                        "",
+                        matchs[loop]['match']['scEquipe1']));
 
+                document.getElementById("divScore" + matchs[loop]['match']['id'])
+                    .appendChild(create_element(
+                        "div",
+                        "score2"+matchs[loop]['match']['id'],
+                        "score score2",
+                        "",
+                        matchs[loop]['match']['scEquipe2']));
+            } else {
+                document.getElementById("divScore" + matchs[loop]['match']['id'])
+                    .appendChild(create_element(
+                        "div",
+                        "score1"+matchs[loop]['match']['id'],
+                        "score score1",
+                        "",
+                        "---"));
+
+                document.getElementById("divScore" + matchs[loop]['match']['id'])
+                    .appendChild(create_element(
+                        "div",
+                        "score2"+matchs[loop]['match']['id'],
+                        "score score2",
+                        "",
+                        "---"));
+            }
             switch (role) {
                 case 'arbitre':
 
@@ -973,41 +1007,7 @@ function display_match(matchs,role){
                     "",
                     ""));
 
-            a = new Date(matchs[loop]['match']['date'] * 1000);
-            if(a<Date.now()) {
-                console.log(matchs[loop]['match']['date']+3600000 + "\<Avant // Après\>" + Date.now())
-                document.getElementById("divScore" + matchs[loop]['match']['id'])
-                    .appendChild(create_element(
-                        "div",
-                        "score1"+matchs[loop]['match']['id'],
-                        "score score1",
-                        "",
-                        matchs[loop]['match']['scEquipe1']));
 
-                document.getElementById("divScore" + matchs[loop]['match']['id'])
-                    .appendChild(create_element(
-                        "div",
-                        "score2"+matchs[loop]['match']['id'],
-                        "score score2",
-                        "",
-                        matchs[loop]['match']['scEquipe2']));
-            } else {
-                document.getElementById("divScore" + matchs[loop]['match']['id'])
-                    .appendChild(create_element(
-                        "div",
-                        "score1"+matchs[loop]['match']['id'],
-                        "score score1",
-                        "",
-                         "---"));
-
-                document.getElementById("divScore" + matchs[loop]['match']['id'])
-                    .appendChild(create_element(
-                        "div",
-                        "score2"+matchs[loop]['match']['id'],
-                        "score score2",
-                        "",
-                        "---"));
-            }
 
             loop++;
         }
