@@ -80,6 +80,7 @@
 
 
     </script>
+
 </head>
 <body>
 
@@ -106,29 +107,25 @@
 <div id="tweet" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Accueil</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
     <a class="twitter-timeline" href="https://twitter.com/AMSB73?ref_src=twsrc%5Etfw">Tweets by AMSB73</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
-
-<div id="tri_temporel" class="hidden">
-    <input type="button" value="moi précédent" onclick="sort_match_by_date(date2.getTime()/1000, date3.getTime()/1000, 'match_div')">
-    <input type="button" value="moi actuel" onclick="sort_match_by_date(date3.getTime()/1000, date4.getTime()/1000, 'match_div')">
-    <input type="button" value="moi suivant" onclick="sort_match_by_date(date4.getTime()/1000, date5.getTime()/1000, 'match_div')">
-    <input type="button" value="saison précédente" onclick="sort_match_by_date(date6.getTime()/1000, date7.getTime()/1000, 'match_div')">
-    <input type="button" value="saison actuelle" onclick="sort_match_by_date(date7.getTime()/1000, date8.getTime()/1000, 'match_div')">
-    <input type="button" value="saison suivante" onclick="sort_match_by_date(date8.getTime()/1000, date9.getTime()/1000, 'match_div')">
-    <input type="button" value="tout" onclick="sort_match_by_date(null, null, 'match_div')">
 </div>
 
 <div id="joueur" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Matchs Joueur</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="dirigeant" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Tous les Matchs</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
@@ -136,67 +133,124 @@
 <div id="otm" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Séléctionnez un Match</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="otmMenu" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">OTM</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="coach" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Coach</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="parent" class="hidden role_div">
     <div class="title-role">
-        <h1 class="title-role-h1"></h1>
+        <h1 class="title-role-h1">Parent</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="benevole" class="hidden role_div">
     <div class="title-role">
-        <h1 class="title-role-h1"></h1>
+        <h1 class="title-role-h1">Bénévole</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="utilisateur" class="hidden role_div">
     <div class="title-role">
-        <h1 class="title-role-h1"></h1>
+        <h1 class="title-role-h1">Utilisateur</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="arbitre" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Arbitre</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="entraineur" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Entraineur</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="entraineurMenu" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Menu</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
 <div id="chat" class="hidden role_div">
     <div class="title-role">
         <h1 class="title-role-h1">Chat</h1>
+
+        <i onclick="logOff()" class="fas fa-power-off logOff"></i>
     </div>
 </div>
 
-<div id = "menu" class = "hidden menu">
-    <i onclick="logOff()" class="fas fa-power-off roleButtonNavBar"></i>
-    <span class="roleButtonNavBar" onclick="changeNav()">&#9776;</span>
+
+<div id="tri_temporel" class="hidden">
+    <label class="amsb-diplay-input_time_display" for="mois_precedent">
+        <input class="hidden" name="match_affichage" type="radio" id="mois_precedent" onclick="sort_match_by_date(date2.getTime()/1000, date3.getTime()/1000, 'match_div')">
+        <span id="button1">Mois précédent</span>
+    </label>
+
+    <label class="amsb-diplay-input_time_display" for="mois_actuel">
+        <input class="hidden" name="match_affichage" type="radio" id="mois_actuel" onclick="sort_match_by_date(date3.getTime()/1000, date4.getTime()/1000, 'match_div')">
+        <span id="button2">Mois actuel</span>
+    </label>
+
+    <label class="amsb-diplay-input_time_display" for="mois_suivant">
+        <input class="hidden" name="match_affichage" type="radio" id="mois_suivant" onclick="sort_match_by_date(date4.getTime()/1000, date5.getTime()/1000, 'match_div')">
+        <span id="button3">Mois suivant</span>
+    </label>
+
+    <label class="amsb-diplay-input_time_display" for="saison_precedente">
+        <input class="hidden" name="match_affichage" type="radio" id="saison_precedente" onclick="sort_match_by_date(date6.getTime()/1000, date7.getTime()/1000, 'match_div')">
+        <span id="button4">Saison précédente</span>
+    </label>
+
+    <label class="amsb-diplay-input_time_display" for="saison_actuelle">
+        <input class="hidden" name="match_affichage" type="radio" id="saison_actuelle" onclick="sort_match_by_date(date7.getTime()/1000, date8.getTime()/1000, 'match_div')">
+        <span id="button5">Saison actuelle</span>
+    </label>
+
+    <label class="amsb-diplay-input_time_display" for="saison_suivante">
+        <input class="hidden" name="match_affichage" type="radio" id="saison_suivante" onclick="sort_match_by_date(date8.getTime()/1000, date9.getTime()/1000, 'match_div')">
+        <span id="button6">Saison suivante</span>
+    </label>
+
+    <label class="amsb-diplay-input_time_display amsb-diplay-input_time_display_last" for="tous_match">
+        <input class="hidden" name="match_affichage" type="radio" id="tous_match" onclick="sort_match_by_date(null, null, 'match_div')" checked>
+        <span id="button7">Tous les matchs</span>
+    </label>
+
 </div>
+
+
+<div id = "menu" class = "hidden menu"></div>
 
 
 </body>
