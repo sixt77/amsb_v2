@@ -434,7 +434,7 @@ function display_message(id_subject) {
         console.log(message_list[i]);
         document.getElementById("message_list_"+id_subject).appendChild(create_element("DIV", "message_"+loop, "message_div", "", ""));
         document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "de : "+message_list[i]['nom']+" "+message_list[i]['prenom']));
-        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "a : "+message_list[i]['date']));
+        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "a : "+timestampToTime(message_list[i]['date'])));
         document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", message_list[i]['contenu']));
         $loop++;
     }
