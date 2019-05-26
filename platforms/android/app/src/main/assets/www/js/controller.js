@@ -77,12 +77,31 @@ function addButtonRoles(user_role){
     let role_list = Object.keys(user_role);
     let btn,i;
     let acc = 'tweet';
-    let btnacc = document.createElement("i");
-    btnacc.setAttribute("id", "accueil");
-    btnacc.setAttribute("class", "fas fa-home roleButtonNavBar");
-    btnacc.setAttribute("onclick", "displayRole('"+acc+"')");
-    btnacc.innerHTML = "";
-    document.getElementById('menu').appendChild(btnacc);
+
+
+    document.getElementById('menu').appendChild(create_element(
+        "i",
+        "accueil",
+        "roleButtonNavBar fas fa-home",
+        "closeNav();displayRole('"+acc+"')",
+        ""));
+
+    document.getElementById('menu').appendChild(create_element(
+        "span",
+        "menu_navBar",
+        "roleButtonNavBar fas fa-bars",
+        "changeNav()",
+        ""));
+
+    document.getElementById('menu').appendChild(create_element(
+        "i",
+        "icone_chat",
+        "roleButtonNavBar far fa-comment-dots",
+        "closeNav();displayRole('chat')",
+        ""));
+
+
+
     for (i in user_role) {
         if(user_role[i] !== null){
             if(role_list[loop] !== "utilisateur" && role_list[loop] !== "entraineur" && role_list[loop] !== "otm"){
@@ -116,12 +135,6 @@ function addButtonRoles(user_role){
         }
         loop++;
     }
-    btn = document.createElement("BUTTON");
-    btn.setAttribute("id", "");
-    btn.setAttribute("class", "roleButton");
-    btn.setAttribute("onclick", "changeNav();displayRole('chat')");
-    btn.innerHTML = "chat";
-    document.getElementById('button_list').appendChild(btn);
 }
 
 function displayRole(role){
@@ -138,6 +151,7 @@ function displayRole(role){
         case 'tweet':
             add_class_by_id("tri_temporel", "hidden");
             ElmtRole.style.display ="block";
+            ElmtRole.style.height ="calc(100% - 50px)";
             break;
 
         case "joueur":
@@ -151,6 +165,7 @@ function displayRole(role){
             break;
 
         case "otmMenu":
+            add_class_by_id("tri_temporel", "hidden");
             ElmtRole.appendChild(create_element(
                 "button",
                 "inscriptionOTM",
@@ -168,6 +183,7 @@ function displayRole(role){
         case "otm":
             matchs = get_matchs_otm(user_role.otm);
             display_match(matchs,role);
+            ElmtRole.style.height ="calc(100% - 155px)";
             break;
 
         case "entraineur":
@@ -178,10 +194,10 @@ function displayRole(role){
         case "chat" :
             matchs = get_all_matchs();
             display_match(matchs,role);
-            document.getElementById(role).style.visibility ="visible";
             break;
 
         case "entraineurMenu":
+            add_class_by_id("tri_temporel", "hidden");
             var notifications = get_notification_by_coach_id(user_role['entraineur']);
             ElmtRole.appendChild(create_element(
                 "button",
@@ -370,6 +386,7 @@ function display_chat() {
 function displayNotifications(idcoach){
     notifs = get_notification_by_coach_id(idcoach);
     remove_class("boutonCoach");
+    document.getElementById('entraineurMenu').style.display ="none";
     var loop = 0;
     for(var i in notifs){
         var match = get_match_by_id(notifs[loop]['id_matchs']);
@@ -400,19 +417,26 @@ function display_subject(id_match) {
 }
 
 function display_message(id_subject) {
+    loop = 0;
     message_list = get_message(id_subject, 10);
-    console.log(message_list);
-    //console.log(message_list);
+    //affichage de la chatbox
     if(count_class("sujet_"+id_subject, "message_list")===0){
         document.getElementById("sujet_"+id_subject).appendChild(create_element("DIV","message_list_"+id_subject,"message_list", "", ""));
 
         document.getElementById("sujet_"+id_subject).appendChild(create_input("text", "chat_box_"+id_subject, "chat_box", "", ""));
         console.log("num : "+id_subject);
-        document.getElementById("sujet_"+id_subject).appendChild(create_button("", "", "envoyer", "send_message("+id_subject+", "+user_info['user_id']+")"));
+        document.getElementById("sujet_"+id_subject).appendChild(create_button("", "send_message", "envoyer", "send_message("+id_subject+", "+user_info['user_id']+")"));
     }
-    remove_class("message_body");
+    remove_class("message_div");
+    //affichage de chaque message
     for(var i in message_list){
-        document.getElementById("message_list_"+id_subject).appendChild(create_element("DIV", "", "message_body", "", "de : "+message_list[i]['nom']+" "+message_list[i]['prenom']+" : "+message_list[i]['contenu']));
+        //+message_list[i]['nom']+" "+message_list[i]['prenom']+" : "+message_list[i]['contenu']
+        console.log(message_list[i]);
+        document.getElementById("message_list_"+id_subject).appendChild(create_element("DIV", "message_"+loop, "message_div", "", ""));
+        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "de : "+message_list[i]['nom']+" "+message_list[i]['prenom']));
+        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "a : "+timestampToTime(message_list[i]['date'])));
+        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", message_list[i]['contenu']));
+        $loop++;
     }
 }
 
@@ -434,8 +458,8 @@ function swap_coach(idrequete,idcoach1,idcoach2,idmatch){
 
 function remplace(coachid){
     remove_class("boutonCoach");
+    document.getElementById('entraineurMenu').style.display = "none";
     var loop = 0;
-    changeNav();
     var matchs = get_matchs_coach(coachid);
     for (var i in matchs) {
         if(matchs[i] != null){
@@ -479,16 +503,43 @@ function notifReplace(idcoachsrc,idcoachdst,idmatch){
 
 function display_equipe(){
     remove_class("boutonCoach");
+    document.getElementById("entraineurMenu").style.display = "none";
     var loop = 0;
-    changeNav();
 
     var matchs = get_matchs_coach(user_role.entraineur);
     for (var i in matchs) {
         if(matchs[i] != null){
-            document.getElementById('entraineur').appendChild(create_element("ul", matchs[loop]['match']['id'], "match_div", "",""));
-            document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("ul", "match_info"+matchs[loop]['match']['id'], "", "",""));
-            document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","lieu : "+matchs[loop]['match']['lieux']));
-            document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","Date : "+timestampToTime(matchs[loop]['match']['date'])));
+            document.getElementById('entraineur')
+                .appendChild(create_element(
+                    "ul",
+                    ""+matchs[loop]['match']['id'],
+                    "match_div",
+                    "",
+                    ""));
+
+            document.getElementById(matchs[loop]['match']['id'])
+                .appendChild(create_element(
+                    "ul",
+                    "match_info"+matchs[loop]['match']['id'],
+                    "",
+                    "",
+                    ""));
+
+            document.getElementById("match_info"+matchs[loop]['match']['id'])
+                .appendChild(create_element(
+                    "li",
+                    "",
+                    "match_info",
+                    "",
+                    "lieu : "+matchs[loop]['match']['lieux']));
+
+            document.getElementById("match_info"+matchs[loop]['match']['id'])
+                .appendChild(create_element(
+                    "li",
+                    "",
+                    "match_info",
+                    "",
+                    "Date : "+timestampToTime(matchs[loop]['match']['date'])));
             if(matchs[loop]['team'][0] !== undefined){
                 document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","Equipe 1 : "+matchs[loop]['team'][0]['nom']));
             }
@@ -779,7 +830,8 @@ function show_player_info($player_id){
 }
 
 function display_match(matchs,role){
-    //remove_class_by_id("tri_temporel", "hidden");
+    remove_class_by_id("tri_temporel", "hidden");
+    document.getElementById(role).style.height = "calc(100vh - 155px)";
     var loop = 0;
     for (var i in matchs) {
         if(matchs[i] != null){
@@ -853,6 +905,49 @@ function display_match(matchs,role){
                     "",
                     ""+timestampToTime(matchs[loop]['match']['date'])));
 
+            document.getElementById("match_info" + matchs[loop]['match']['id'])
+                .appendChild(create_element(
+                    "li",
+                    "divScore"+matchs[loop]['match']['id'],
+                    "divScore",
+                    "",
+                    ""));
+
+            a = new Date(matchs[loop]['match']['date'] * 1000);
+            if(a<Date.now()) {
+                console.log(matchs[loop]['match']['date']+3600000 + "\<Avant // Après\>" + Date.now())
+                document.getElementById("divScore" + matchs[loop]['match']['id'])
+                    .appendChild(create_element(
+                        "div",
+                        "score1"+matchs[loop]['match']['id'],
+                        "score score1",
+                        "",
+                        matchs[loop]['match']['scEquipe1']));
+
+                document.getElementById("divScore" + matchs[loop]['match']['id'])
+                    .appendChild(create_element(
+                        "div",
+                        "score2"+matchs[loop]['match']['id'],
+                        "score score2",
+                        "",
+                        matchs[loop]['match']['scEquipe2']));
+            } else {
+                document.getElementById("divScore" + matchs[loop]['match']['id'])
+                    .appendChild(create_element(
+                        "div",
+                        "score1"+matchs[loop]['match']['id'],
+                        "score score1",
+                        "",
+                        "---"));
+
+                document.getElementById("divScore" + matchs[loop]['match']['id'])
+                    .appendChild(create_element(
+                        "div",
+                        "score2"+matchs[loop]['match']['id'],
+                        "score score2",
+                        "",
+                        "---"));
+            }
 
             switch (role) {
                 case 'arbitre':
@@ -964,6 +1059,7 @@ function display_match(matchs,role){
 
                 default:
             }
+
             loop++;
         }
     }
