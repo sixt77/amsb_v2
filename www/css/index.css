@@ -6,7 +6,6 @@
 
 }
 
-
 ::-webkit-scrollbar {
     display: none;
 }
@@ -22,19 +21,19 @@ body {
     -webkit-user-select: none; /* prevent copy paste, to allow, change 'none' to 'text' */
     font-size: 14px;
     height: 100vh;
-    background-color: #adacac;
+    background-color: #e6e6e6;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
-input:-webkit-autofill:focus
+input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-    -webkit-box-shadow: 0 0 0px 1000px whitesmoke inset;
+    -webkit-box-shadow: 0 0 0 1000px whitesmoke inset;
 }
 
 
@@ -83,50 +82,6 @@ input[type="password"]:hover {
 img {
     width: 200px;
 }
-
-
-/*@media only screen and (orientation: landscape ){
-    .log {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width:100%;
-        height: 100%;
-        align-items:center;
-    }
-
-    form {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 100%;
-        max-width: 500px;
-        min-width: 100px;
-    }
-
-    .homescreen:nth-child(1) {
-        width: 50%;
-        height: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .homescreen:nth-child(2) {
-        width: 50%;
-        height: 80%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    img {
-        width: 80%;
-        max-width: 500px;
-    }
-}
-*/
 
 .role_div {
     display: flex;
@@ -205,18 +160,6 @@ img {
     color: #fff;
 }
 
-.roleButtonNavBar:nth-child(1) {
-
-}
-
-.roleButtonNavBar:nth-child(2) {
-
-}
-
-.roleButtonNavBar:nth-child(3) {
-
-}
-
 .menu {
     width: 100%;
     background-color: #F12023;
@@ -262,8 +205,7 @@ img {
 }
 
 #otm .match_div,
-#otm .role_div,
-#arbitre .match_div {
+#otm .role_div {
     flex-direction: row;
 }
 
@@ -405,8 +347,10 @@ img {
     width: 100%;
     height: 50px;
     margin: auto;
-    font-size: 20px;
+    font-size: 30px;
     color: #fff;
+    text-align: center;
+    line-height: 50px;
 }
 
 .red_button {
@@ -415,6 +359,10 @@ img {
 
 .green_button {
     background-color: #00aa00;
+}
+
+.black_button {
+    background-color: #000000;
 }
 
 .parent_info_list {
@@ -454,7 +402,7 @@ img {
     margin: 10px auto 0;
     border: 1px solid #D5211D;
     border-radius: 5px;
-    font-family: "Roboto";
+    font-family: "Roboto", sans-serif;
     font-size: 24px;
     width: 150px;
     display: block;
@@ -594,25 +542,88 @@ img {
 
 .sujets_div {
     border-top: 2px solid #888;
-    padding: 10px;
+    padding: 0 10px;
+    min-height: 50px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .message_list {
-    max-height: 150px;
+    max-height: 350px;
     overflow-y: scroll;
+    width: 100%;
+}
+
+.message_div {
+    padding: 10px;
+    border: 1px solid #CCCCCC;
+    border-radius: 17px 17px 0 17px;
+    margin: 15px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.message_div_name {
+    width: 50%;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+.message_div_hour {
+    width: 50%;
+    font-size: 16px;
+}
+
+.message_div_contenu {
+    width: 100%;
+    padding: 10px 0;
+    font-size: 18px;
 }
 
 .send_message {
-    float: right;
     text-align: center;
     line-height: 20px;
     -webkit-appearance: none;
     border: none;
     text-transform: capitalize;
-    margin: 10px 0px;
+    margin: 10px 10px 10px 50px;
     border-radius: 3px;
     color: #fff;
     background-color: #F12023;
     font-size: 16px;
     padding: 7px 20px;
+    flex: 1;
+}
+
+.match_info_categorie {
+    border-bottom: 2px solid #888;
+    height: 40px;
+    float: left;
+}
+
+.nameOfSubject {
+    text-transform: capitalize;
+    display: block;
+    width: 100%;
+    float: left;
+    line-height: 50px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.return {
+    text-align: center;
+    line-height: 20px;
+    -webkit-appearance: none;
+    border: none;
+    text-transform: capitalize;
+    margin: 10px 50px 10px 10px;
+    border-radius: 3px;
+    color: #fff;
+    background-color: #F12023;
+    font-size: 16px;
+    padding: 7px 20px;
+    flex: 1;
 }
