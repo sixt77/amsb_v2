@@ -417,9 +417,9 @@ function display_subject(id_match) {
 }
 
 function display_message(id_subject) {
+    loop = 0;
     message_list = get_message(id_subject, 10);
-    console.log(message_list);
-    //console.log(message_list);
+    //affichage de la chatbox
     if(count_class("sujet_"+id_subject, "message_list")===0){
         document.getElementById("sujet_"+id_subject).appendChild(create_element("DIV","message_list_"+id_subject,"message_list", "", ""));
 
@@ -427,9 +427,16 @@ function display_message(id_subject) {
         console.log("num : "+id_subject);
         document.getElementById("sujet_"+id_subject).appendChild(create_button("", "send_message", "envoyer", "send_message("+id_subject+", "+user_info['user_id']+")"));
     }
-    remove_class("message_body");
+    remove_class("message_div");
+    //affichage de chaque message
     for(var i in message_list){
-        document.getElementById("message_list_"+id_subject).appendChild(create_element("DIV", "", "message_body", "", "de : "+message_list[i]['nom']+" "+message_list[i]['prenom']+" : "+message_list[i]['contenu']));
+        //+message_list[i]['nom']+" "+message_list[i]['prenom']+" : "+message_list[i]['contenu']
+        console.log(message_list[i]);
+        document.getElementById("message_list_"+id_subject).appendChild(create_element("DIV", "message_"+loop, "message_div", "", ""));
+        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "de : "+message_list[i]['nom']+" "+message_list[i]['prenom']));
+        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "a : "+message_list[i]['date']));
+        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", message_list[i]['contenu']));
+        $loop++;
     }
 }
 
