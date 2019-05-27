@@ -62,6 +62,15 @@ function get_matchs_otm(otm_id){
     }
 }
 
+function get_matchs_without_score_otm(otm_id){
+    var request = new XMLHttpRequest();
+    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_matchs_without_score_OTM&OTM_id='+otm_id, false);  // `false` makes the request synchronous
+    request.send(null);
+    if (request.status === 200) {
+        return JSON.parse(request.responseText);
+    }
+}
+
 function get_matchs_coach(coach_id){
     var request = new XMLHttpRequest();
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_match_list_by_id_coach&coach_id='+coach_id, false);  // `false` makes the request synchronous

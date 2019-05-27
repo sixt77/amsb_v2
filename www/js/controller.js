@@ -22,6 +22,7 @@ function logOff(){
     document.getElementById('accueil').style.display = 'none';
     document.getElementById('connexion').style.display ='block';
     document.getElementById('menu').style.display = 'none';
+    remove_class_by_id("accueil", "roleButtonNavBar");
     closeNav();
     remove_class("roleButtonNavBar");
     hide_class("role_div");
