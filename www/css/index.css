@@ -111,10 +111,6 @@ img {
     font: inherit;
 }
 
-.playerSelected {
-    border: 3px solid rgb(0, 0, 0);
-}
-
 .boutonCoach {
     margin: 20px auto;
     border: 1px solid #888;
@@ -135,7 +131,6 @@ img {
 }
 
 .roleButton:hover {
-    /* color: #CC0000; */
     background: #000;
 }
 
@@ -319,7 +314,6 @@ img {
     margin: 0;
     line-height: 25px;
     font-size: 16px;
-    color: #000;
 }
 
 .player_info_supp {
@@ -329,16 +323,17 @@ img {
     margin: 0;
     line-height: 25px;
     color: #000;
+    font-size: 16px;
 }
 
 .player_div {
     display: flex;
     flex-direction: column;
-    border-top: 2px solid #888;
-    /* border-bottom: 2px solid #888; */
+    border: 2px solid #888;
     background-color: #e4e1e1fa;
     padding: 10px 30px;
-    /* margin: 10px 0 0 0; */
+    margin: 10px;
+    transition: 0.5s;
 }
 
 .sub_button {
@@ -368,24 +363,21 @@ img {
 .parent_info_list {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     width: 100%;
     border: 1px solid #888;
-    border-radius: 5px;
-    margin-top: 5px;
     background-color: whitesmoke;
+    margin-top: 10px;
+    padding: 10px;
 }
 
 .parent_info {
-    margin-left: 10px;
+    line-height: 20px;
+    font-size: 16px;
 }
 
-.parent_info:nth-child(1) {
-    margin-top: 10px;
-}
+.parent_info:nth-child(1) {text-align: center;}
 
 .parent_info:nth-child(4) {
-    margin-bottom: 10px;
 }
 
 .formButton:active {
@@ -516,6 +508,7 @@ img {
     margin: 0;
     padding: 0;
     width: calc(100% / 3);
+    height: 35px;
     line-height: 35px;
     font-size: 12px;
     text-align: center;
@@ -629,5 +622,13 @@ img {
 }
 
 .validatedPlayer{
-    background-color: #88e108;
+    background-color: #F12023 !important;
+    color: #fff;
+}
+
+.playerSelected {
+    border: 2px solid #000 !important;
+    background-color: #888;
+    border-radius: 15px;
+    transition: 0.5s;
 }
