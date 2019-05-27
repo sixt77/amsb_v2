@@ -9,7 +9,7 @@ function login(identifiant, password){
 
 function get_user_info(user_id){
     var request = new XMLHttpRequest();
-    alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_user_info&user_id='+user_id);
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_user_info&user_id='+user_id);
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_user_info&user_id='+user_id, false);  // `false` makes the request synchronous
     request.send(null);
     if (request.status === 200) {
@@ -56,6 +56,15 @@ function get_matchs_arbitre(arbitre_id){
 function get_matchs_otm(otm_id){
     var request = new XMLHttpRequest();
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_match_list_by_id_OTM&OTM_id='+otm_id, false);  // `false` makes the request synchronous
+    request.send(null);
+    if (request.status === 200) {
+        return JSON.parse(request.responseText);
+    }
+}
+
+function get_matchs_without_score_otm(otm_id){
+    var request = new XMLHttpRequest();
+    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_matchs_without_score_OTM&OTM_id='+otm_id, false);  // `false` makes the request synchronous
     request.send(null);
     if (request.status === 200) {
         return JSON.parse(request.responseText);

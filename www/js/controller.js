@@ -144,6 +144,7 @@ function displayRole(role){
     remove_class("match_div");
     remove_class("boutonCoach");
     var matchs;
+
     let ElmtRole = document.getElementById(role);
 
     ElmtRole.style.display ="flex";
@@ -244,13 +245,14 @@ function displayRole(role){
             display_match(matchs,role);
             break;
     }
+    console.log(matchs);
 
 }
 
 function gestionScore() {
     hide_class("role_div");
     remove_class("boutonCoach");
-    let matchs = get_matchs_otm(user_role.otm);
+    let matchs = get_matchs_without_score_otm(user_role.otm);
     let loop = 0;
 
     for (var i in matchs) {
@@ -373,6 +375,7 @@ function sendScore(id){
     let secondScore  = document.getElementById('score2'+id).value;
     if(post_score(id,premierScore,secondScore)){
         alert('score envoyé');
+        displayRole('otmMenu');
     }else{
         alert('erreur');
     }
@@ -528,8 +531,10 @@ function remplace(coachid){
     document.getElementById('entraineurMenu').style.display = "none";
     var loop = 0;
     var matchs = get_matchs_coach(coachid);
+    console.log(matchs);
     for (var i in matchs) {
         if(matchs[i] != null){
+            console.log(matchs[loop]['match']);
             document.getElementById('entraineur').appendChild(create_element("ul", matchs[loop]['match']['id'], "match_div", "choixMatchRemplacement('"+coachid+"','"+matchs[loop]['match']['id']+"')",""));
             document.getElementById(matchs[loop]['match']['id']).appendChild(create_element("ul", "match_info"+matchs[loop]['match']['id'], "", "",""));
             document.getElementById("match_info"+matchs[loop]['match']['id']).appendChild(create_element("li", "", "match_info", "","lieu : "+matchs[loop]['match']['lieux']));

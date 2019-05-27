@@ -9,6 +9,7 @@ function login(identifiant, password){
 
 function get_user_info(user_id){
     var request = new XMLHttpRequest();
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_user_info&user_id='+user_id);
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_user_info&user_id='+user_id, false);  // `false` makes the request synchronous
     request.send(null);
     if (request.status === 200) {
@@ -87,6 +88,27 @@ function desinscription_match_otm(id_match,id_otm) {
         return JSON.parse(request.responseText);
     }
 }
+
+function inscription_match_player(id_match,id_player) {
+    var request = new XMLHttpRequest();
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=player_subscribe_to_match&id_player='+id_player+'&match_id='+id_match);
+    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=player_subscribe_to_match&id_player='+id_player+'&match_id='+id_match, false);  // `false` makes the request synchronous
+    request.send(null);
+    if (request.status === 200) {
+        return JSON.parse(request.responseText);
+    }
+}
+
+function desinscription_match_player(id_match,id_player) {
+    var request = new XMLHttpRequest();
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=player_unsubscribe_to_match&id_player='+id_player+'&match_id='+id_match);
+    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=player_unsubscribe_to_match&id_player='+id_player+'&match_id='+id_match, false);  // `false` makes the request synchronous
+    request.send(null);
+    if (request.status === 200) {
+        return JSON.parse(request.responseText);
+    }
+}
+
 
 function inscription_match_arbitre(id_match,id_arbitre) {
     var request = new XMLHttpRequest();
@@ -196,7 +218,6 @@ function valide_changement_coach(idrequete,idcoach1,idcoach2,idmatch){
 
 function get_player_by_player_list(id_coach, id_match){
     var request = new XMLHttpRequest();
-    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_player_list&coach_id=' + id_coach + '&match_id=' + id_match);
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_player_list&coach_id=' + id_coach + '&match_id=' + id_match, false);
     request.send(null);
     if (request.status ===200) {

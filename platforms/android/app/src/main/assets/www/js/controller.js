@@ -67,8 +67,9 @@ function timestampToTime(UNIX_timestamp){
     return time;
 }
 
-
-
+function ScrollToBottom($id) {
+    document.getElementById($id).scrollTo(0,document.getElementById($id).scrollHeight);
+}
 
 
 
@@ -188,6 +189,7 @@ function displayRole(role){
 
         case "entraineur":
             matchs = get_matchs_coach(user_role.entraineur);
+            console.log(matchs);
             display_match(matchs,role);
             break;
 
@@ -405,13 +407,22 @@ function displayNotifications(idcoach){
     document.getElementById('entraineur').style.display="flex";
 
 }
+
+
+
 function display_subject(id_match) {
     subjects =  get_subject_list(id_match);
     if(count_class("match_info"+id_match, "sujets_div")===0){
         remove_class("sujets_div");
         remove_class("chat_box");
         for (var i in subjects){
-            document.getElementById("match_info"+id_match).appendChild(create_element('div', "sujet_"+subjects[i]['id_sujets'], "sujets_div", "display_message('"+subjects[i]['id_sujets']+"')", subjects[i]['role']))
+            document.getElementById("match_info"+id_match)
+                .appendChild(create_element(
+                    'div',
+                    "sujet_"+subjects[i]['id_sujets'],
+                    "sujets_div",
+                    "display_message('"+subjects[i]['id_sujets']+"')",
+                    '<span class="nameOfSubject">'+subjects[i]['role']+'</span>'));
         }
     }
 }
@@ -421,24 +432,80 @@ function display_message(id_subject) {
     message_list = get_message(id_subject, 10);
     //affichage de la chatbox
     if(count_class("sujet_"+id_subject, "message_list")===0){
-        document.getElementById("sujet_"+id_subject).appendChild(create_element("DIV","message_list_"+id_subject,"message_list", "", ""));
+        document.getElementById("sujet_"+id_subject)
+            .appendChild(create_element(
+                "DIV",
+                "message_list_"+id_subject,
+                "message_list",
+                "",
+                ""));
 
-        document.getElementById("sujet_"+id_subject).appendChild(create_input("text", "chat_box_"+id_subject, "chat_box", "", ""));
-        console.log("num : "+id_subject);
-        document.getElementById("sujet_"+id_subject).appendChild(create_button("", "send_message", "envoyer", "send_message("+id_subject+", "+user_info['user_id']+")"));
+        document.getElementById("sujet_"+id_subject)
+            .appendChild(create_input("text", "chat_box_"+id_subject,
+                "chat_box",
+                "",
+                ""));
+
+        document.getElementById("sujet_"+id_subject)
+            .appendChild(create_button(
+                "",
+                "return",
+                "retour",
+                "closeMessage("+id_subject+")"));
+
+        document.getElementById("sujet_"+id_subject)
+            .appendChild(create_button(
+                "",
+                "send_message",
+                "envoyer",
+                "send_message("+id_subject+", "+user_info['user_id']+")"));
+
+
     }
     remove_class("message_div");
+
     //affichage de chaque message
     for(var i in message_list){
-        //+message_list[i]['nom']+" "+message_list[i]['prenom']+" : "+message_list[i]['contenu']
-        console.log(message_list[i]);
-        document.getElementById("message_list_"+id_subject).appendChild(create_element("DIV", "message_"+loop, "message_div", "", ""));
-        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "de : "+message_list[i]['nom']+" "+message_list[i]['prenom']));
-        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", "a : "+timestampToTime(message_list[i]['date'])));
-        document.getElementById("message_"+loop).appendChild(create_element("DIV", "message_"+i, "message_div", "", message_list[i]['contenu']));
-        $loop++;
+
+        document.getElementById("message_list_"+id_subject)
+            .appendChild(create_element(
+                "div",
+                "message_"+loop,
+                "message_div",
+                "",
+                ""));
+
+
+        document.getElementById("message_"+loop)
+            .appendChild(create_element(
+                "div",
+                "message_name_"+i,
+                "message_div_name",
+                "",
+                ""+message_list[i]['nom']+" "+message_list[i]['prenom']));
+
+        document.getElementById("message_"+loop)
+            .appendChild(create_element(
+                "div",
+                "message_hour_"+i,
+                "message_div_hour",
+                "",
+                ""+timestampToTime(message_list[i]['date'])));
+
+        document.getElementById("message_"+loop)
+            .appendChild(create_element(
+                "div",
+                "message_contenu_"+i,
+                "message_div_contenu",
+                "",
+                ""+message_list[i]['contenu']));
+        loop++;
     }
+    ScrollToBottom("message_list_"+id_subject);
+
 }
+
+
 
 function send_message(id_sujet, id_user) {
     var text = document.getElementById("chat_box_"+id_sujet).value;
@@ -507,6 +574,8 @@ function display_equipe(){
     var loop = 0;
 
     var matchs = get_matchs_coach(user_role.entraineur);
+    console.log('test'+user_role.entraineur);
+    console.log(matchs);
     for (var i in matchs) {
         if(matchs[i] != null){
             document.getElementById('entraineur')
@@ -604,6 +673,7 @@ function remove_class($class) {
 function remove_class_by_id(id, class1) {
     $( "#"+id+"" ).removeClass(class1);
 }
+
 function add_class_by_id(id, class1) {
     $( "#"+id+"" ).addClass(class1);
 }
@@ -627,6 +697,10 @@ function remove_id($id) {
     $( "#"+$id+"" ).remove();
 }
 
+function closeMessage($id) {
+    $("#sujet_"+$id).remove();
+}
+
 function add_attribute_class($class, $attribut, $value){
     var items = document.getElementsByClassName($class);
     for (var i = 0; i < items.length; i++) {
@@ -642,6 +716,8 @@ function remove_attribute_class($class, $attribut){
 }
 
 function subscribe_to_match($match_id, $role, $selected, $id_role) {
+    document.getElementById("tous_match").checked = true;
+    console.log("selected = "+$selected);
     switch ($role) {
         case 'arbitre':
             if($selected){
@@ -655,6 +731,13 @@ function subscribe_to_match($match_id, $role, $selected, $id_role) {
                 desinscription_match_otm($match_id,$id_role);
             }else{
                 inscription_match_otm($match_id,$id_role);
+            }
+            break;
+        case 'joueur':
+            if($selected === true){
+                desinscription_match_player($match_id,$id_role);
+            }else{
+                inscription_match_player($match_id,$id_role);
             }
             break;
         default:
@@ -701,7 +784,7 @@ function choice_player_list_on_match($id_match, $id_coach) {
     var deploy = false;
 
     for (var y = 0; y < childNodes.length; y++) {
-        if(childNodes[y].className == "player_div"){
+        if(childNodes[y].className === "player_div"){
             deploy = true;
         }
     }
@@ -712,21 +795,24 @@ function choice_player_list_on_match($id_match, $id_coach) {
         remove_class("player_div");
 
         var player_list= get_player_list_by_id_coach($id_match, $id_coach);
+        console.log(player_list);
         var selected_player_list=get_player_by_player_list($id_coach, $id_match);
         document.getElementById($id_match).appendChild(create_element("ul","player_list"+$id_match, "player_list", "",""));
         var loop = 0;
-        console.log(selected_player_list);
         for (var i in player_list) {
             if(player_list[i] != null){
-                console.log(selected_player_list);
-                if(isInArray(selected_player_list, player_list[loop]['id'])){
-                    document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div playerSelected", "select_player('"+player_list[loop]['id']+"')",""));
-                    document.getElementById("player_"+player_list[loop]['id']).style.border = "3px solid rgb(0,0,0)";
+                if(isInArray(selected_player_list, player_list[loop]['id_joueurs'])){
+                    if(player_list[loop]['selected']){
+                        document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id_joueurs'], "player_div playerSelected validatedPlayer", "select_player('"+player_list[loop]['id_joueurs']+"')",""));
+                    }else{
+                        document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id_joueurs'], "player_div playerSelected", "select_player('"+player_list[loop]['id_joueurs']+"')",""));
+                    }
+                    document.getElementById("player_"+player_list[loop]['id_joueurs']).style.border = "3px solid rgb(0,0,0)";
                 }else{
-                    document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div", "select_player('"+player_list[loop]['id']+"')",""));
+                    document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id_joueurs'], "player_div", "select_player('"+player_list[loop]['id_joueurs']+"')",""));
                 }
-                document.getElementById("player_"+player_list[loop]['id']).appendChild(create_element("li", "", "player_info", "","Nom : "+player_list[i]['nom']));
-                document.getElementById("player_"+player_list[loop]['id']).appendChild(create_element("li", "", "player_info", "","Prénom : "+player_list[i]['prenom']));
+                document.getElementById("player_"+player_list[loop]['id_joueurs']).appendChild(create_element("li", "", "player_info", "","Nom : "+player_list[i]['nom']));
+                document.getElementById("player_"+player_list[loop]['id_joueurs']).appendChild(create_element("li", "", "player_info", "","Prénom : "+player_list[i]['prenom']));
                 loop++;
             }
         }
@@ -894,6 +980,14 @@ function display_match(matchs,role){
                 .appendChild(create_element(
                     "li",
                     "",
+                    "match_info match_info_categorie",
+                    "",
+                    ""+matchs[loop]['match']['categorie']));
+
+            document.getElementById("match_info"+matchs[loop]['match']['id'])
+                .appendChild(create_element(
+                    "li",
+                    "",
                     "match_info match_info_lieu_item",
                     "",
                     ""+matchs[loop]['match']['lieux']));
@@ -974,19 +1068,19 @@ function display_match(matchs,role){
                     if(matchs[loop]['match']['selected']){
                         document.getElementById(matchs[loop]['match']['id'])
                             .appendChild(create_element(
-                                "BUTTON",
+                                "i",
                                 "match"+[loop],
-                                "sub_button red_button",
+                                "fas fa-minus sub_button red_button",
                                 "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', "+matchs[loop]['match']['selected']+", "+user_role.arbitre+")",
-                                "-"));
+                                ""));
                     }else{
                         document.getElementById(matchs[loop]['match']['id'])
                             .appendChild(create_element(
-                                "BUTTON",
+                                "i",
                                 "match"+[loop],
-                                "sub_button green_button",
+                                "fas fa-plus sub_button black_button",
                                 "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', "+matchs[loop]['match']['selected']+", "+user_role.arbitre+")",
-                                "+"));
+                                ""));
                     }
                     break;
 
@@ -1050,6 +1144,28 @@ function display_match(matchs,role){
                         .setAttribute(
                             "onclick",
                             "display_subject("+matchs[loop]['match']['id']+")");
+                    break;
+
+                case "joueur":
+                    console.log(user_role);
+                    if(matchs[loop]['stat']==='true'){
+                        document.getElementById(matchs[loop]['match']['id'])
+                            .appendChild(create_element(
+                                "BUTTON",
+                                "match"+[loop],
+                                "sub_button red_button",
+                                "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', true, "+user_role.joueur+")",
+                                "-"));
+                    }else{
+                        document.getElementById(matchs[loop]['match']['id'])
+                            .appendChild(create_element(
+                                "BUTTON",
+                                "match"+[loop],
+                                "sub_button green_button",
+                                "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', false, "+user_role.joueur+")",
+                                "+"));
+                    }
+
                     break;
 
                 case 'entraineurChoixEquipe':
