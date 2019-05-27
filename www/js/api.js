@@ -9,6 +9,7 @@ function login(identifiant, password){
 
 function get_user_info(user_id){
     var request = new XMLHttpRequest();
+    alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_user_info&user_id='+user_id);
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_user_info&user_id='+user_id, false);  // `false` makes the request synchronous
     request.send(null);
     if (request.status === 200) {
@@ -90,6 +91,7 @@ function desinscription_match_otm(id_match,id_otm) {
 
 function inscription_match_player(id_match,id_player) {
     var request = new XMLHttpRequest();
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=player_subscribe_to_match&id_player='+id_player+'&match_id='+id_match);
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=player_subscribe_to_match&id_player='+id_player+'&match_id='+id_match, false);  // `false` makes the request synchronous
     request.send(null);
     if (request.status === 200) {
@@ -99,6 +101,7 @@ function inscription_match_player(id_match,id_player) {
 
 function desinscription_match_player(id_match,id_player) {
     var request = new XMLHttpRequest();
+    //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=player_unsubscribe_to_match&id_player='+id_player+'&match_id='+id_match);
     request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=player_unsubscribe_to_match&id_player='+id_player+'&match_id='+id_match, false);  // `false` makes the request synchronous
     request.send(null);
     if (request.status === 200) {

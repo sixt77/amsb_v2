@@ -189,6 +189,7 @@ function displayRole(role){
 
         case "entraineur":
             matchs = get_matchs_coach(user_role.entraineur);
+            console.log(matchs);
             display_match(matchs,role);
             break;
 
@@ -573,6 +574,8 @@ function display_equipe(){
     var loop = 0;
 
     var matchs = get_matchs_coach(user_role.entraineur);
+    console.log('test'+user_role.entraineur);
+    console.log(matchs);
     for (var i in matchs) {
         if(matchs[i] != null){
             document.getElementById('entraineur')
@@ -798,18 +801,18 @@ function choice_player_list_on_match($id_match, $id_coach) {
         var loop = 0;
         for (var i in player_list) {
             if(player_list[i] != null){
-                if(isInArray(selected_player_list, player_list[loop]['id'])){
+                if(isInArray(selected_player_list, player_list[loop]['id_joueurs'])){
                     if(player_list[loop]['selected']){
-                        document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div playerSelected validatedPlayer", "select_player('"+player_list[loop]['id']+"')",""));
+                        document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id_joueurs'], "player_div playerSelected validatedPlayer", "select_player('"+player_list[loop]['id_joueurs']+"')",""));
                     }else{
-                        document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div playerSelected", "select_player('"+player_list[loop]['id']+"')",""));
+                        document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id_joueurs'], "player_div playerSelected", "select_player('"+player_list[loop]['id_joueurs']+"')",""));
                     }
-                    document.getElementById("player_"+player_list[loop]['id']).style.border = "3px solid rgb(0,0,0)";
+                    document.getElementById("player_"+player_list[loop]['id_joueurs']).style.border = "3px solid rgb(0,0,0)";
                 }else{
-                    document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div", "select_player('"+player_list[loop]['id']+"')",""));
+                    document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id_joueurs'], "player_div", "select_player('"+player_list[loop]['id_joueurs']+"')",""));
                 }
-                document.getElementById("player_"+player_list[loop]['id']).appendChild(create_element("li", "", "player_info", "","Nom : "+player_list[i]['nom']));
-                document.getElementById("player_"+player_list[loop]['id']).appendChild(create_element("li", "", "player_info", "","Prénom : "+player_list[i]['prenom']));
+                document.getElementById("player_"+player_list[loop]['id_joueurs']).appendChild(create_element("li", "", "player_info", "","Nom : "+player_list[i]['nom']));
+                document.getElementById("player_"+player_list[loop]['id_joueurs']).appendChild(create_element("li", "", "player_info", "","Prénom : "+player_list[i]['prenom']));
                 loop++;
             }
         }
@@ -1144,7 +1147,7 @@ function display_match(matchs,role){
                     break;
 
                 case "joueur":
-                    console.log(matchs[loop]['stat']);
+                    console.log(user_role);
                     if(matchs[loop]['stat']==='true'){
                         document.getElementById(matchs[loop]['match']['id'])
                             .appendChild(create_element(
