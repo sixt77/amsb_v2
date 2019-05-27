@@ -627,3 +627,7 @@ img {
     padding: 7px 20px;
     flex: 1;
 }
+
+.validatedPlayer{
+    background-color: #88e108;
+}

@@ -714,6 +714,7 @@ function remove_attribute_class($class, $attribut){
 
 function subscribe_to_match($match_id, $role, $selected, $id_role) {
     document.getElementById("tous_match").checked = true;
+    console.log("selected = "+$selected);
     switch ($role) {
         case 'arbitre':
             if($selected){
@@ -727,6 +728,13 @@ function subscribe_to_match($match_id, $role, $selected, $id_role) {
                 desinscription_match_otm($match_id,$id_role);
             }else{
                 inscription_match_otm($match_id,$id_role);
+            }
+            break;
+        case 'joueur':
+            if($selected === true){
+                desinscription_match_player($match_id,$id_role);
+            }else{
+                inscription_match_player($match_id,$id_role);
             }
             break;
         default:
@@ -784,15 +792,18 @@ function choice_player_list_on_match($id_match, $id_coach) {
         remove_class("player_div");
 
         var player_list= get_player_list_by_id_coach($id_match, $id_coach);
+        console.log(player_list);
         var selected_player_list=get_player_by_player_list($id_coach, $id_match);
         document.getElementById($id_match).appendChild(create_element("ul","player_list"+$id_match, "player_list", "",""));
         var loop = 0;
-        console.log(selected_player_list);
         for (var i in player_list) {
             if(player_list[i] != null){
-                console.log(selected_player_list);
                 if(isInArray(selected_player_list, player_list[loop]['id'])){
-                    document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div playerSelected", "select_player('"+player_list[loop]['id']+"')",""));
+                    if(player_list[loop]['selected']){
+                        document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div playerSelected validatedPlayer", "select_player('"+player_list[loop]['id']+"')",""));
+                    }else{
+                        document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div playerSelected", "select_player('"+player_list[loop]['id']+"')",""));
+                    }
                     document.getElementById("player_"+player_list[loop]['id']).style.border = "3px solid rgb(0,0,0)";
                 }else{
                     document.getElementById("display_"+$id_match).appendChild(create_element("ul","player_"+player_list[loop]['id'], "player_div", "select_player('"+player_list[loop]['id']+"')",""));
@@ -1130,6 +1141,28 @@ function display_match(matchs,role){
                         .setAttribute(
                             "onclick",
                             "display_subject("+matchs[loop]['match']['id']+")");
+                    break;
+
+                case "joueur":
+                    console.log(matchs[loop]['stat']);
+                    if(matchs[loop]['stat']==='true'){
+                        document.getElementById(matchs[loop]['match']['id'])
+                            .appendChild(create_element(
+                                "BUTTON",
+                                "match"+[loop],
+                                "sub_button red_button",
+                                "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', true, "+user_role.joueur+")",
+                                "-"));
+                    }else{
+                        document.getElementById(matchs[loop]['match']['id'])
+                            .appendChild(create_element(
+                                "BUTTON",
+                                "match"+[loop],
+                                "sub_button green_button",
+                                "subscribe_to_match("+matchs[loop]['match']['id']+", '"+role+"', false, "+user_role.joueur+")",
+                                "+"));
+                    }
+
                     break;
 
                 case 'entraineurChoixEquipe':
