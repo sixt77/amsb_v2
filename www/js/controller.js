@@ -956,7 +956,6 @@ function choice_player_list_on_match($id_match, $id_coach) {
             "valid_selection("+$id_match+","+$id_coach+")",
             "Valider l'équipe"));
     }else{
-        alert("");
         remove_class("boutonCoach");
         remove_class("player_list");
         remove_class("player_div");
