@@ -415,7 +415,7 @@ function displayNotifications(idcoach){
 
 
 function display_subject(id_match) {
-    subjects =  get_subject_list(id_match);
+    subjects =  get_subject_list(id_match, user_role['utilisateur']);
     if(count_class("match_info"+id_match, "sujets_div")===0){
         remove_class("sujets_div");
         remove_class("chat_box");
@@ -510,8 +510,6 @@ function display_message(id_subject) {
     }else{
         remove_id("subject_close_"+id_subject);
     }
-
-
 }
 
 
