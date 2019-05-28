@@ -433,7 +433,7 @@ function display_subject(id_match) {
 
 function display_message(id_subject) {
     loop = 0;
-    message_list = get_message(id_subject, 10);
+    message_list = get_message(id_subject, 1000);
     //affichage de la chatbox
     if(count_class("sujet_"+id_subject, "message_list")===0){
         document.getElementById("sujet_"+id_subject)
@@ -880,13 +880,12 @@ function select_player(id){
 function choice_player_list_on_match($id_match, $id_coach) {
     childNodes = document.getElementById("display_"+$id_match).childNodes;
     var deploy = false;
-
     for (var y = 0; y < childNodes.length; y++) {
-        if(childNodes[y].className === "player_div"){
+        if(childNodes[y].className.includes( "player_div")){
+
             deploy = true;
         }
     }
-
     if(!deploy){
         remove_class("player_list");
         remove_class("boutonCoach");
