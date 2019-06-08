@@ -516,7 +516,7 @@ function display_message(id_subject) {
 
 function send_message(id_sujet, id_user) {
     var text = document.getElementById("chat_box_"+id_sujet).value;
-    if(post_message(id_sujet, id_user, new Date().getTime(), text)){
+    if(post_message(id_sujet, id_user, (new Date().getTime())/1000, text)){
         display_message(id_sujet);
         document.getElementById("chat_box_"+id_sujet).value = "";
     }else{
@@ -1107,6 +1107,7 @@ function display_match(matchs,role){
     document.getElementById("tous_match").checked = true;
     document.getElementById(role).style.height = "calc(100vh - 155px)";
     var loop = 0;
+    console.log(matchs);
     for (var i in matchs) {
         if(matchs[i] != null){
 

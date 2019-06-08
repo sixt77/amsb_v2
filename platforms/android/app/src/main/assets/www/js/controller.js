@@ -22,6 +22,7 @@ function logOff(){
     document.getElementById('accueil').style.display = 'none';
     document.getElementById('connexion').style.display ='block';
     document.getElementById('menu').style.display = 'none';
+    remove_class_by_id("accueil", "roleButtonNavBar");
     closeNav();
     remove_class("roleButtonNavBar");
     hide_class("role_div");
@@ -414,7 +415,7 @@ function displayNotifications(idcoach){
 
 
 function display_subject(id_match) {
-    subjects =  get_subject_list(id_match);
+    subjects =  get_subject_list(id_match, user_role['utilisateur']);
     if(count_class("match_info"+id_match, "sujets_div")===0){
         remove_class("sujets_div");
         remove_class("chat_box");
@@ -431,81 +432,84 @@ function display_subject(id_match) {
 }
 
 function display_message(id_subject) {
-    loop = 0;
-    message_list = get_message(id_subject, 10);
-    //affichage de la chatbox
-    if(count_class("sujet_"+id_subject, "message_list")===0){
-        document.getElementById("sujet_"+id_subject)
-            .appendChild(create_element(
-                "DIV",
-                "message_list_"+id_subject,
-                "message_list",
-                "",
-                ""));
+    if(count_class("sujet_"+id_subject, "subject_closed")==0){
+        loop = 0;
+        message_list = get_message(id_subject, 1000);
+        //affichage de la chatbox
+        if(count_class("sujet_"+id_subject, "message_list")===0){
+            document.getElementById("sujet_"+id_subject)
+                .appendChild(create_element(
+                    "DIV",
+                    "message_list_"+id_subject,
+                    "message_list",
+                    "",
+                    ""));
 
-        document.getElementById("sujet_"+id_subject)
-            .appendChild(create_input("text", "chat_box_"+id_subject,
-                "chat_box",
-                "",
-                ""));
+            document.getElementById("sujet_"+id_subject)
+                .appendChild(create_input("text", "chat_box_"+id_subject,
+                    "chat_box",
+                    "",
+                    ""));
 
-        document.getElementById("sujet_"+id_subject)
-            .appendChild(create_button(
-                "",
-                "return",
-                "retour",
-                "closeMessage("+id_subject+")"));
+            document.getElementById("sujet_"+id_subject)
+                .appendChild(create_button(
+                    "return_"+id_subject,
+                    "return",
+                    "retour",
+                    "closeMessage("+id_subject+")"));
 
-        document.getElementById("sujet_"+id_subject)
-            .appendChild(create_button(
-                "",
-                "send_message",
-                "envoyer",
-                "send_message("+id_subject+", "+user_info['user_id']+")"));
+            document.getElementById("sujet_"+id_subject)
+                .appendChild(create_button(
+                    "send_message_"+id_subject,
+                    "send_message",
+                    "envoyer",
+                    "send_message("+id_subject+", "+user_info['user_id']+")"));
 
 
+        }
+        remove_class("message_div");
+
+        //affichage de chaque message
+        for(var i in message_list){
+
+            document.getElementById("message_list_"+id_subject)
+                .appendChild(create_element(
+                    "div",
+                    "message_"+loop,
+                    "message_div",
+                    "",
+                    ""));
+
+
+            document.getElementById("message_"+loop)
+                .appendChild(create_element(
+                    "div",
+                    "message_name_"+i,
+                    "message_div_name",
+                    "",
+                    ""+message_list[i]['nom']+" "+message_list[i]['prenom']));
+
+            document.getElementById("message_"+loop)
+                .appendChild(create_element(
+                    "div",
+                    "message_hour_"+i,
+                    "message_div_hour",
+                    "",
+                    ""+timestampToTime(message_list[i]['date'])));
+
+            document.getElementById("message_"+loop)
+                .appendChild(create_element(
+                    "div",
+                    "message_contenu_"+i,
+                    "message_div_contenu",
+                    "",
+                    ""+message_list[i]['contenu']));
+            loop++;
+        }
+        ScrollToBottom("message_list_"+id_subject);
+    }else{
+        remove_id("subject_close_"+id_subject);
     }
-    remove_class("message_div");
-
-    //affichage de chaque message
-    for(var i in message_list){
-
-        document.getElementById("message_list_"+id_subject)
-            .appendChild(create_element(
-                "div",
-                "message_"+loop,
-                "message_div",
-                "",
-                ""));
-
-
-        document.getElementById("message_"+loop)
-            .appendChild(create_element(
-                "div",
-                "message_name_"+i,
-                "message_div_name",
-                "",
-                ""+message_list[i]['nom']+" "+message_list[i]['prenom']));
-
-        document.getElementById("message_"+loop)
-            .appendChild(create_element(
-                "div",
-                "message_hour_"+i,
-                "message_div_hour",
-                "",
-                ""+timestampToTime(message_list[i]['date'])));
-
-        document.getElementById("message_"+loop)
-            .appendChild(create_element(
-                "div",
-                "message_contenu_"+i,
-                "message_div_contenu",
-                "",
-                ""+message_list[i]['contenu']));
-        loop++;
-    }
-    ScrollToBottom("message_list_"+id_subject);
-
 }
 
 
@@ -797,7 +801,11 @@ function remove_id($id) {
 }
 
 function closeMessage($id) {
-    $("#sujet_"+$id).remove();
+    remove_id("chat_box_"+$id);
+    remove_id("message_list_"+$id);
+    remove_id("return_"+$id);
+    remove_id("send_message_"+$id);
+    document.getElementById("sujet_"+$id).appendChild(create_element("DIV", "subject_close_"+$id, "subject_closed"));
 }
 
 function add_attribute_class($class, $attribut, $value){
@@ -879,13 +887,12 @@ function select_player(id){
 function choice_player_list_on_match($id_match, $id_coach) {
     childNodes = document.getElementById("display_"+$id_match).childNodes;
     var deploy = false;
-
     for (var y = 0; y < childNodes.length; y++) {
-        if(childNodes[y].className === "player_div"){
+        if(childNodes[y].className.includes( "player_div")){
+
             deploy = true;
         }
     }
-
     if(!deploy){
         remove_class("player_list");
         remove_class("boutonCoach");
@@ -956,7 +963,6 @@ function choice_player_list_on_match($id_match, $id_coach) {
             "valid_selection("+$id_match+","+$id_coach+")",
             "Valider l'équipe"));
     }else{
-        alert("");
         remove_class("boutonCoach");
         remove_class("player_list");
         remove_class("player_div");

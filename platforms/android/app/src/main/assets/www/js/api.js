@@ -267,10 +267,10 @@ function get_subject_id(id_match, role){
 }
 
 //recupère la liste des sujet pour un match
-function get_subject_list(id_match){
+function get_subject_list(id_match, user_id){
     var request = new XMLHttpRequest();
     //alert('https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_subject_id&match_id=' + id_match+'&role='+role);
-    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_subject_list&match_id=' + id_match, false);
+    request.open('GET', 'https://os-vps418.infomaniak.ch/etu_info/amsb1/DEV/index.php/api?action=get_subject_list&match_id=' + id_match +'&user_id=' + user_id, false);
     request.send(null);
     if (request.status ===200) {
         return JSON.parse(request.responseText);
