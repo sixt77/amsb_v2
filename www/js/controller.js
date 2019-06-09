@@ -69,6 +69,14 @@ function timestampToTime(UNIX_timestamp){
     return time;
 }
 
+function isPassed(date){
+    if(date > (Date.now()/1000)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 function ScrollToBottom($id) {
     document.getElementById($id).scrollTo(0,document.getElementById($id).scrollHeight);
 }
@@ -823,33 +831,36 @@ function remove_attribute_class($class, $attribut){
 }
 
 function subscribe_to_match($match_id, $role, $selected, $id_role) {
-    document.getElementById("tous_match").checked = true;
-    console.log("selected = "+$selected);
-    switch ($role) {
-        case 'arbitre':
-            if($selected){
-                desinscription_match_arbitre($match_id,$id_role)
-            }else{
-                inscription_match_arbitre($match_id,$id_role);
-            }
-            break;
-        case 'otm':
-            if($selected){
-                desinscription_match_otm($match_id,$id_role);
-            }else{
-                inscription_match_otm($match_id,$id_role);
-            }
-            break;
-        case 'joueur':
-            if($selected === true){
-                desinscription_match_player($match_id,$id_role);
-            }else{
-                inscription_match_player($match_id,$id_role);
-            }
-            break;
-        default:
+    match = get_match_by_id($match_id);
+    if(isPassed(match['match']['date'])){
+        document.getElementById("tous_match").checked = true;
+        switch ($role) {
+            case 'arbitre':
+                if($selected){
+                    desinscription_match_arbitre($match_id,$id_role)
+                }else{
+                    inscription_match_arbitre($match_id,$id_role);
+                }
+                break;
+            case 'otm':
+                if($selected){
+                    desinscription_match_otm($match_id,$id_role);
+                }else{
+                    inscription_match_otm($match_id,$id_role);
+                }
+                break;
+            case 'joueur':
+                if($selected === true){
+                    desinscription_match_player($match_id,$id_role);
+                }else{
+                    inscription_match_player($match_id,$id_role);
+                }
+                break;
+            default:
+        }
+        displayRole($role);
     }
-    displayRole($role);
+
 }
 
 function sort_match_by_date(date1, date2, classe){
